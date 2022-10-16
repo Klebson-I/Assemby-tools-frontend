@@ -45,7 +45,7 @@ export const Login = () => {
     return <>
         {
             isAdminSelect ?
-                <LoginForm/>
+                <LoginForm handleGoBackClick={handleGoBackClick}/>
                 :<Menu open={true} sx={styleObject.menu}>
                     <h1 style={styleObject.header}>Select user type</h1>
                     <MenuItem sx={styleObject.menuItem} onClick={handleAdminUserClick}>
