@@ -3,11 +3,32 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {RouterProvider, createBrowserRouter, redirect} from "react-router-dom";
+import {Login} from "./Pages/Login";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const rootLoader = () => {
+    return redirect('/login');
+}
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        loader: rootLoader,
+    },
+    {
+        path: '/login',
+        element: <Login/>
+    },
+    {
+        path: '/app',
+        element: <App/>
+    }
+])
 root.render(
   <React.StrictMode>
-    <App />
+      <RouterProvider router={router}/>
   </React.StrictMode>
 );
 
