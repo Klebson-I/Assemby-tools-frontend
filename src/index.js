@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import {UserContext} from "./context/UserContext/UserContext";
 import {Login} from "./Pages/Login";
-import {AppHeader} from "./Components/AppHeader/AppHeader";
-import {ActionSelectContainer} from "./Components/ActionSelectContainer/ActionSelectContainer";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,6 +14,7 @@ root.render(
       <BrowserRouter>
           <UserContext>
               <Routes>
+                  <Route path={'/'} element={<Navigate to='/login'/>}/>
                   <Route path='/login' element={<Login/>}/>
                   <Route path='/app' element={<App/>}/>
               </Routes>

@@ -1,6 +1,6 @@
 import {url} from "../constants";
 
-export const handleFetch = async (method, body, specificUrl) => {
+export const handleFetch = async (method, body, specificUrl, goodCallback, badCallback) => {
     const data = await fetch(`${url}${specificUrl}`,{
         method,
         body: JSON.stringify(body),
@@ -8,5 +8,11 @@ export const handleFetch = async (method, body, specificUrl) => {
             'Content-Type': 'application/json',
         }
     })
+    if (data.status === 200) {
+        goodCallback();
+    }
+    else {
+        badCallback();
+    }
     return await data.json();
 }

@@ -3,7 +3,9 @@ import {Menu, MenuItem} from "@mui/material";
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import PersonIcon from '@mui/icons-material/Person';
 import {LoginForm} from "../Components/LoginForm/LoginForm";
-import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {useUserStateDispatch} from "../context/UserContext/UserContext";
+import {addToUserState} from "../context/UserContext/actions";
 
 const styleObject = {
     menu: {
@@ -34,6 +36,17 @@ const styleObject = {
 
 export const Login = () => {
     const [isAdminSelect, setIsAdminSelect] = useState(false);
+    const dispatchUser = useUserStateDispatch();
+    const navigate = useNavigate();
+
+    const handleStandardUserClick = () => {
+        dispatchUser(addToUserState({
+            userType: 'standard',
+            login: '',
+            password: '',
+        }));
+        navigate('/app');
+    }
 
     const handleAdminUserClick = () => {
         setIsAdminSelect(true);
@@ -53,12 +66,10 @@ export const Login = () => {
                         <SupervisorAccountIcon sx={styleObject.icon}/>
                         Admin
                     </MenuItem>
-                    <Link to='/app' style={styleObject.link}>
-                        <MenuItem sx={styleObject.menuItem}>
+                        <MenuItem sx={styleObject.menuItem} onClick={handleStandardUserClick}>
                             <PersonIcon sx={styleObject.icon}/>
                             Standard user
                         </MenuItem>
-                    </Link>
                 </Menu>
         }
     </>

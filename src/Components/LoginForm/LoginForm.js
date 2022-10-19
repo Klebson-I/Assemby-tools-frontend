@@ -3,6 +3,9 @@ import {Button, IconButton, Paper, TextField} from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {handleFetch} from "../../Hooks/useFetch";
+import {useUserState, useUserStateDispatch} from "../../context/UserContext/UserContext";
+import {addToUserState} from "../../context/UserContext/actions";
+import { useNavigate } from 'react-router-dom';
 
 const styleObject = {
     formContainer: {
@@ -44,6 +47,8 @@ export const LoginForm = ({handleGoBackClick}) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const userStateDispatch = useUserStateDispatch();
+    const navigate = useNavigate();
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -53,6 +58,14 @@ export const LoginForm = ({handleGoBackClick}) => {
                 password,
             },
             'admin',
+            () => {
+                    userStateDispatch(addToUserState({
+                            userType: 'admin',
+                            login,
+                            password,
+                        }));
+                    navigate('/app')
+            },
         );
         console.log(arePassesCorrect);
     };
