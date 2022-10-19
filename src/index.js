@@ -1,34 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import {RouterProvider, createBrowserRouter, redirect} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {UserContext} from "./context/UserContext/UserContext";
 import {Login} from "./Pages/Login";
+import {AppHeader} from "./Components/AppHeader/AppHeader";
+import {ActionSelectContainer} from "./Components/ActionSelectContainer/ActionSelectContainer";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const rootLoader = () => {
-    return redirect('/login');
-}
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        loader: rootLoader,
-    },
-    {
-        path: '/login',
-        element: <Login/>
-    },
-    {
-        path: '/app',
-        element: <App/>
-    }
-])
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router}/>
+      <BrowserRouter>
+          <UserContext>
+              <Routes>
+                  <Route path='/login' element={<Login/>}/>
+                  <Route path='/app' element={<App/>}/>
+              </Routes>
+          </UserContext>
+      </BrowserRouter>
   </React.StrictMode>
 );
 

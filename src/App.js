@@ -1,11 +1,10 @@
 import './App.css';
 import {AppHeader} from "./Components/AppHeader/AppHeader";
 import {ActionSelectContainer} from "./Components/ActionSelectContainer/ActionSelectContainer";
-function App() {
+
+export function App() {
   return <>
-    <AppHeader/>
-    <ActionSelectContainer/>
+        <AppHeader/>
+        <ActionSelectContainer/>
   </>
 }
-
-export default App;

@@ -3,6 +3,7 @@ import {Menu, MenuItem} from "@mui/material";
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import PersonIcon from '@mui/icons-material/Person';
 import {LoginForm} from "../Components/LoginForm/LoginForm";
+import {Link} from "react-router-dom";
 
 const styleObject = {
     menu: {
@@ -25,14 +26,14 @@ const styleObject = {
         borderBottom: '1px solid black',
         paddingBottom: '15px',
     },
+    link: {
+        color: 'inherit',
+        textDecoration: 'none',
+    }
 }
 
 export const Login = () => {
     const [isAdminSelect, setIsAdminSelect] = useState(false);
-
-    const handleStandardUserClick = () => {
-
-    };
 
     const handleAdminUserClick = () => {
         setIsAdminSelect(true);
@@ -52,10 +53,12 @@ export const Login = () => {
                         <SupervisorAccountIcon sx={styleObject.icon}/>
                         Admin
                     </MenuItem>
-                    <MenuItem sx={styleObject.menuItem}>
-                        <PersonIcon sx={styleObject.icon}/>
-                        Standard user
-                    </MenuItem>
+                    <Link to='/app' style={styleObject.link}>
+                        <MenuItem sx={styleObject.menuItem}>
+                            <PersonIcon sx={styleObject.icon}/>
+                            Standard user
+                        </MenuItem>
+                    </Link>
                 </Menu>
         }
     </>
