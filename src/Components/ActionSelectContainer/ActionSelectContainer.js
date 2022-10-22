@@ -3,6 +3,7 @@ import {appConstants} from "../Utils/constants"
 import {ActionBlock} from "../ActionBlock/ActionBlock";
 import {Box} from "@mui/material";
 import {SearchForAction} from "../SearchForAction/SearchForAction";
+import {FilterBlock} from "../FilterBlock/FilterBlock";
 
 // @TODO create search bar for the proper action
 
@@ -28,6 +29,7 @@ const styleObject = {
 export const ActionSelectContainer = () => {
     return <Box sx={styleObject.box}>
         <SearchForAction/>
+        <FilterBlock/>
         <Box sx={styleObject.boxForActions}>
             {
                 appConstants.arrayOfActions.map((action, index) =>

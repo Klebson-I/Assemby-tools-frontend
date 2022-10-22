@@ -9,6 +9,7 @@ export const handleFetch = async (method, body, specificUrl, goodCallback, badCa
         }
     })
     if (data.status === 200) {
+        console.log(data);
         goodCallback();
     }
     else {

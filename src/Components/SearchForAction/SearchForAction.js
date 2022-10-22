@@ -9,5 +9,10 @@ const styleObject = {
 };
 
 export const SearchForAction = () => {
-    return <TextField id="standard-basic" label="Find action" variant="standard" sx={styleObject.search}/>
+    return <TextField
+        id="standard-basic"
+        label="Find action"
+        variant="standard"
+        sx={styleObject.search}
+    />
 }

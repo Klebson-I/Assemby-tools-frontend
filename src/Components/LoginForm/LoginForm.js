@@ -66,6 +66,7 @@ export const LoginForm = ({handleGoBackClick}) => {
                         }));
                     navigate('/app')
             },
+            () => console.log('Bad passes'),
         );
         console.log(arePassesCorrect);
     };
