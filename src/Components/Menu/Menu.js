@@ -3,6 +3,7 @@ import {Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheade
 import {ExpandLess, ExpandMore, StarBorder, CleaningServices, Sync} from "@mui/icons-material";
 import {useFilterState, useFilterStateDispatch} from "../../context/FilterContext/FilterContext";
 import {addToFilterState} from "../../context/FilterContext/actions";
+import {FILTER_TYPES} from "../../constants";
 
 const stylesObject = {
     containerDiv: {
@@ -16,6 +17,8 @@ const stylesObject = {
         fontSize: '30px'
     },
 };
+
+
 
 export const Menu = () => {
     const [openMilling, setOpenMilling] = useState(false);
@@ -33,13 +36,12 @@ export const Menu = () => {
 
     const isFilterActive = (text) => filterState.toolsFilter.includes(text);
 
-    const handleFilterClick = (e) => {
-        const text = e.target.innerText;
-        if(isFilterActive(text)) {
+    const handleFilterClick = (filter) => {
+        if(isFilterActive(filter)) {
             return;
         }
         dispatchFilterState(addToFilterState({
-            toolsFilter: [...filterState.toolsFilter, text],
+            toolsFilter: [...filterState.toolsFilter, filter],
         }))
     }
 
@@ -63,19 +65,19 @@ export const Menu = () => {
             </ListItemButton>
             <Collapse in={openMilling} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleFilterClick(e)} selected={isFilterActive('Item 1')}>
+                    <ListItemButton sx={{ pl: 4 }} >
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
                         <ListItemText primary="Item 1" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleFilterClick(e)} selected={isFilterActive('Item 2')}>
+                    <ListItemButton sx={{ pl: 4 }} >
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
                         <ListItemText primary="Item 2" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleFilterClick(e)} selected={isFilterActive('Item 3')}>
+                    <ListItemButton sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
@@ -92,19 +94,19 @@ export const Menu = () => {
             </ListItemButton>
             <Collapse in={openTurning} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleFilterClick(e)} selected={isFilterActive('Cutting inserts')}>
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.cuttingInsert)} selected={isFilterActive(FILTER_TYPES.cuttingInsert)}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
                         <ListItemText primary="Cutting inserts" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleFilterClick(e)} selected={isFilterActive('Turning holders')}>
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.turningHolder)} selected={isFilterActive(FILTER_TYPES.turningHolder)}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
                         <ListItemText primary="Turning holders" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleFilterClick(e)} selected={isFilterActive('Assembly items')}>
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.assemblyItem)} selected={isFilterActive(FILTER_TYPES.assemblyItem)}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>

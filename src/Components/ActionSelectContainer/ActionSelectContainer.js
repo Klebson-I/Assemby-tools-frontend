@@ -15,6 +15,7 @@ import {styleObject} from "./style";
 export const ActionSelectContainer = () => {
     const [option, setOption] = useState('ACTIONS');
     const [tools, setTools] = useState([]);
+    const [wordFilter, setWordFilter] = useState('');
     const itemState = useItemState();
     const filterState = useFilterState();
 
@@ -23,20 +24,29 @@ export const ActionSelectContainer = () => {
             const allItems = Object?.values(itemState).flatMap((arr) => arr);
             setTools(allItems);
         }
+        else {
+            const filteredItems = Object?.values(itemState)
+                .flatMap((arr) => arr)
+                .filter((item) => filterState.toolsFilter.includes(item.type));
+            setTools(filteredItems);
+        }
     },[itemState, filterState])
 
     return <Box sx={styleObject.box}>
         <OptionBar option={option} setOption={setOption}/>
-        <SearchForAction/>
+        <SearchForAction setWordFilter={setWordFilter}/>
         {option === 'TOOLS' && <FilterBlock/>}
         <Box sx={styleObject.boxForActions}>
             {
-                option === 'ACTIONS' && appConstants.arrayOfActions.map((action, index) =>
-                    <ActionBlock actionName={action} key={index}/>
+                option === 'ACTIONS' && appConstants.arrayOfActions
+                    .filter((action) => action.includes(wordFilter))
+                    .map((action, index) => <ActionBlock actionName={action} key={index}/>
                 )
             }
             {
-                option === 'TOOLS' && tools.map((tool, index) => <ItemBlock
+                option === 'TOOLS' && tools
+                    .filter((tool) => tool.name.includes(wordFilter))
+                    .map((tool, index) => <ItemBlock
                     key={index}
                     toolParams={tool}
                 />)

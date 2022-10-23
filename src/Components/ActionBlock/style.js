@@ -12,5 +12,6 @@ export const styleObject = {
             transform: 'rotateZ(1deg) rotateX(5deg) rotateY(5deg)',
             cursor:'pointer',
         },
+        margin: '10px',
     },
 };

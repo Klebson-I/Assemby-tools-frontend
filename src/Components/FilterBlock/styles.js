@@ -9,7 +9,9 @@ export const styleObject = {
     },
     filterButton: {
         padding: '3px',
-        margin: '5px'
+        margin: '5px',
+        display: 'flex',
+        alignItems: 'center',
     },
     filtersHeader: {
         fontSize: '22px',

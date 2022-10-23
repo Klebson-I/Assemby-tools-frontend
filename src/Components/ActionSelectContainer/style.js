@@ -11,7 +11,7 @@ export const styleObject = {
     boxForActions: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent:'space-between',
+        justifyContent:'flex-start',
         flexWrap: 'wrap',
         width: '100%',
     },

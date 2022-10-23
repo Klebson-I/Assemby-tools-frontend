@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useFilterState, useFilterStateDispatch} from "../../context/FilterContext/FilterContext";
 import {Button, Paper} from "@mui/material";
 import {addToFilterState} from "../../context/FilterContext/actions";
+import ClearIcon from '@mui/icons-material/Clear';
 import {styleObject} from "./styles";
 
 export const FilterBlock = () => {
@@ -32,7 +33,8 @@ export const FilterBlock = () => {
                 variant='contained'
                 onClick={() => deleteFilter(filter)}
             >
-                {filter} X
+                {filter.replaceAll('_'," ")}
+                <ClearIcon/>
             </Button>)
         }
     </Paper>

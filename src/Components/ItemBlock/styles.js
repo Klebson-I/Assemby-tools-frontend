@@ -14,6 +14,7 @@ export const styleObject = {
             cursor:'pointer',
         },
         paddingBottom: '5px',
+        margin: '10px',
     },
     image: {
         width: '50%',

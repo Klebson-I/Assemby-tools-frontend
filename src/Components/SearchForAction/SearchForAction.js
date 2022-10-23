@@ -4,15 +4,17 @@ import {TextField} from "@mui/material";
 const styleObject = {
     search: {
         width: '80%',
-        marginLeft: '20px'
+        marginLeft: '20px',
+        marginTop: '10px',
     },
 };
 
-export const SearchForAction = () => {
+export const SearchForAction = ({setWordFilter, searchText}) => {
     return <TextField
         id="standard-basic"
-        label="Find action"
+        label={searchText || "Search"}
         variant="standard"
         sx={styleObject.search}
+        onChange = {(e) => setWordFilter(e.target.value)}
     />
 }

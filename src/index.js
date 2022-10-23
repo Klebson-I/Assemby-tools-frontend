@@ -8,6 +8,7 @@ import {UserContext} from "./context/UserContext/UserContext";
 import {Login} from "./Pages/Login";
 import {FilterContext} from "./context/FilterContext/FilterContext";
 import {ItemContext} from "./context/ItemsContext/ItemContext";
+import {SingleToolView} from "./Pages/SingleToolView";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -21,6 +22,7 @@ root.render(
                           <Route path={'/'} element={<Navigate to='/login'/>}/>
                           <Route path='/login' element={<Login/>}/>
                           <Route path='/app' element={<App/>}/>
+                          <Route path='/app/singletool/:type/:id' element={<SingleToolView/>}/>
                       </Routes>
                   </ItemContext>
               </FilterContext>
