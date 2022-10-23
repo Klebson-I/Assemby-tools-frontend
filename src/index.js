@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import {UserContext} from "./context/UserContext/UserContext";
 import {Login} from "./Pages/Login";
+import {FilterContext} from "./context/FilterContext/FilterContext";
+import {ItemContext} from "./context/ItemsContext/ItemContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -13,11 +15,15 @@ root.render(
   <React.StrictMode>
       <BrowserRouter>
           <UserContext>
-              <Routes>
-                  <Route path={'/'} element={<Navigate to='/login'/>}/>
-                  <Route path='/login' element={<Login/>}/>
-                  <Route path='/app' element={<App/>}/>
-              </Routes>
+              <FilterContext>
+                  <ItemContext>
+                      <Routes>
+                          <Route path={'/'} element={<Navigate to='/login'/>}/>
+                          <Route path='/login' element={<Login/>}/>
+                          <Route path='/app' element={<App/>}/>
+                      </Routes>
+                  </ItemContext>
+              </FilterContext>
           </UserContext>
       </BrowserRouter>
   </React.StrictMode>
