@@ -2,25 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useFilterState, useFilterStateDispatch} from "../../context/FilterContext/FilterContext";
 import {Button, Paper} from "@mui/material";
 import {addToFilterState} from "../../context/FilterContext/actions";
-
-const styleObject = {
-    filtersContainer: {
-        minWidth: '100%',
-        display: 'flex',
-        justifyContent: 'flex-start',
-        marginTop: '20px',
-        flexWrap: 'wrap',
-        alignItems: 'center'
-    },
-    filterButton: {
-        padding: '3px',
-        margin: '5px'
-    },
-    filtersHeader: {
-        fontSize: '22px',
-        marginLeft: '3px'
-    }
-}
+import {styleObject} from "./styles";
 
 export const FilterBlock = () => {
     const filterState = useFilterState();

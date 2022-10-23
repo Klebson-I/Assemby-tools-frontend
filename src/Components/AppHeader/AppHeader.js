@@ -1,20 +1,7 @@
 import React from 'react';
 import {Paper, Typography, Box, IconButton} from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-const styleObject = {
-    box: {
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'space-between',
-    },
-    typography: {
-
-    },
-    accountIcon: {
-        fontSize: '50px',
-    }
-}
+import {styleObject} from "./styles";
 
 export const AppHeader = () => {
     return <Paper

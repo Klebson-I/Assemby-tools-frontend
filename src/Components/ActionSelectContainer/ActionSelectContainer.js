@@ -8,27 +8,9 @@ import {OptionBar} from "../OptionBar/OptionBar";
 import {useItemState} from "../../context/ItemsContext/ItemContext";
 import {useFilterState} from "../../context/FilterContext/FilterContext";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
+import {styleObject} from "./style";
 
 // @TODO create search bar for the proper action
-
-const styleObject = {
-    box: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent:'flex-start',
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        width: '75%',
-        marginTop:'20px'
-    },
-    boxForActions: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent:'space-between',
-        flexWrap: 'wrap',
-        width: '100%',
-    },
-}
 
 export const ActionSelectContainer = () => {
     const [option, setOption] = useState('ACTIONS');

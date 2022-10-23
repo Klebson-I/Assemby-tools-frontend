@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader} from "@mui/material";
-import {ExpandLess, ExpandMore, StarBorder, MoveToInbox, CleaningServices, Sync} from "@mui/icons-material";
+import {ExpandLess, ExpandMore, StarBorder, CleaningServices, Sync} from "@mui/icons-material";
 import {useFilterState, useFilterStateDispatch} from "../../context/FilterContext/FilterContext";
 import {addToFilterState} from "../../context/FilterContext/actions";
 
