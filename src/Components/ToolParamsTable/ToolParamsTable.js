@@ -7,8 +7,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Paper} from "@mui/material";
 
+const styleObject = {
+    tableContainer: {
+        width: "45%",
+    }
+}
+
 export const ToolParamsTable = ({tool}) => {
-    return <TableContainer component={Paper}>
+    return <TableContainer component={Paper} sx={styleObject.tableContainer}>
         <Table>
             <TableHead>
                 <TableRow>
@@ -28,9 +34,9 @@ export const ToolParamsTable = ({tool}) => {
             </TableHead>
             <TableBody>
                 {
-                    Object.entries(tool).map((paramWithValue) => <TableRow>
+                    Object.entries(tool).map((paramWithValue, index) => <TableRow key={index}>
                         <TableCell>{paramWithValue[0]}</TableCell>
-                        <TableCell>Description of the param</TableCell>
+                        <TableCell sx={{maxWidth: '200px'}}>Description of the param</TableCell>
                         <TableCell>{paramWithValue[1]}</TableCell>
                         <TableCell>Unity</TableCell>
                     </TableRow>)

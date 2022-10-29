@@ -9,6 +9,8 @@ import {Login} from "./Pages/Login";
 import {FilterContext} from "./context/FilterContext/FilterContext";
 import {ItemContext} from "./context/ItemsContext/ItemContext";
 import {SingleToolView} from "./Pages/SingleToolView";
+import {SetToolContext} from "./context/SetToolContext/SetToolContext";
+import {GlobalPopup} from "./Components/GlobalPopup/GlobalPopup";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,12 +20,15 @@ root.render(
           <UserContext>
               <FilterContext>
                   <ItemContext>
+                      <SetToolContext>
+                          <GlobalPopup/>
                       <Routes>
                           <Route path={'/'} element={<Navigate to='/login'/>}/>
                           <Route path='/login' element={<Login/>}/>
                           <Route path='/app' element={<App/>}/>
                           <Route path='/app/singletool/:type/:id' element={<SingleToolView/>}/>
                       </Routes>
+                      </SetToolContext>
                   </ItemContext>
               </FilterContext>
           </UserContext>

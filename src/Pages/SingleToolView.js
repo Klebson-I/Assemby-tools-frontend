@@ -5,9 +5,10 @@ import {IconButton} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {getProperImage} from "../Components/ItemBlock/utils";
 import {handleFetch} from "../Hooks/useFetch";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {FILTER_TYPES} from "../constants";
 import {ToolParamsTable} from "../Components/ToolParamsTable/ToolParamsTable";
+
 
 
 const styleObject = {
@@ -18,8 +19,21 @@ const styleObject = {
     },
     productContainer: {
         marginTop: '20px',
-
-    }
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'space-evenly',
+    },
+    image: {
+        height: 'auto',
+        width: '50%'
+    },
+    leftSide: {
+        width: '40%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
 }
 
 const getUrlPrefixByToolType = (type) => {
@@ -34,6 +48,9 @@ const getUrlPrefixByToolType = (type) => {
 export const SingleToolView = () => {
     const [tool, setTool] = useState({});
     const {type, id} = useParams();
+    const navigate = useNavigate();
+
+    const goBack = () => navigate('/app');
 
     useEffect(() => {
 
@@ -51,13 +68,16 @@ export const SingleToolView = () => {
     return <>
         <AppHeader/>
         <div style={styleObject.container}>
-            <IconButton>
+            <IconButton onClick={goBack}>
                 <ArrowBackIcon fontSize='large'/>
             </IconButton>
             <SearchForAction searchText='Search for params'/>
             {
                 tool && <div style={styleObject.productContainer}>
-                    <img src={getProperImage(type)}/>
+                    <div style={styleObject.leftSide}>
+                        <img src={getProperImage(type)} style={styleObject.image}/>
+                        <h3>{tool.name}</h3>
+                    </div>
                     <ToolParamsTable tool={tool} />
                 </div>
             }

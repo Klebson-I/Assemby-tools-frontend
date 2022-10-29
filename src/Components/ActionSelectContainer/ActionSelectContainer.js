@@ -9,6 +9,7 @@ import {useItemState} from "../../context/ItemsContext/ItemContext";
 import {useFilterState} from "../../context/FilterContext/FilterContext";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
 import {styleObject} from "./style";
+import {SetToolContainer} from "../SetToolContainer/SetToolContainer";
 
 // @TODO create search bar for the proper action
 
@@ -34,23 +35,27 @@ export const ActionSelectContainer = () => {
 
     return <Box sx={styleObject.box}>
         <OptionBar option={option} setOption={setOption}/>
-        <SearchForAction setWordFilter={setWordFilter}/>
+        {
+            option!=='SET TOOL' && <SearchForAction setWordFilter={setWordFilter}/>
+        }
+
         {option === 'TOOLS' && <FilterBlock/>}
-        <Box sx={styleObject.boxForActions}>
-            {
-                option === 'ACTIONS' && appConstants.arrayOfActions
-                    .filter((action) => action.includes(wordFilter))
-                    .map((action, index) => <ActionBlock actionName={action} key={index}/>
-                )
-            }
-            {
-                option === 'TOOLS' && tools
-                    .filter((tool) => tool.name.includes(wordFilter))
-                    .map((tool, index) => <ItemBlock
-                    key={index}
-                    toolParams={tool}
-                />)
-            }
-        </Box>
+        <SetToolContainer/>
+        {/*<Box sx={styleObject.boxForActions}>*/}
+        {/*    {*/}
+        {/*        option === 'ACTIONS' && appConstants.arrayOfActions*/}
+        {/*            .filter((action) => action.includes(wordFilter))*/}
+        {/*            .map((action, index) => <ActionBlock actionName={action} key={index}/>*/}
+        {/*        )*/}
+        {/*    }*/}
+        {/*    {*/}
+        {/*        option === 'TOOLS' && tools*/}
+        {/*            .filter((tool) => tool.name.includes(wordFilter))*/}
+        {/*            .map((tool, index) => <ItemBlock*/}
+        {/*            key={index}*/}
+        {/*            toolParams={tool}*/}
+        {/*        />)*/}
+        {/*    }*/}
+        {/*</Box>*/}
     </Box>
 }

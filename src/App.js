@@ -7,6 +7,7 @@ import {handleFetch} from "./Hooks/useFetch";
 import {useItemStateDispatch} from "./context/ItemsContext/ItemContext";
 import {addToItemState} from "./context/ItemsContext/actions";
 import {useFilterState} from "./context/FilterContext/FilterContext";
+import {SetToolContext} from "./context/SetToolContext/SetToolContext";
 
 const stylesObject = {
     containerDiv: {
@@ -35,9 +36,9 @@ export function App() {
 
   return <>
         <AppHeader/>
-        <div style={stylesObject.containerDiv}>
-            <ActionSelectContainer/>
-            <Menu/>
-        </div>
+            <div style={stylesObject.containerDiv}>
+                <ActionSelectContainer/>
+                <Menu/>
+            </div>
   </>
 }
