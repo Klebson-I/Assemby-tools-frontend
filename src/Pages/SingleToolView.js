@@ -3,7 +3,7 @@ import {AppHeader} from "../Components/AppHeader/AppHeader";
 import {SearchForAction} from "../Components/SearchForAction/SearchForAction";
 import {IconButton} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {getProperImage} from "../Components/ItemBlock/utils";
+import {getProperImage} from "../Components/ItemBlockForSetTool/utils";
 import {handleFetch} from "../Hooks/useFetch";
 import { useParams, useNavigate } from 'react-router-dom';
 import {FILTER_TYPES} from "../constants";
@@ -50,10 +50,9 @@ export const SingleToolView = () => {
     const {type, id} = useParams();
     const navigate = useNavigate();
 
-    const goBack = () => navigate('/app');
+    const goBack = () => navigate(-1);
 
     useEffect(() => {
-
         (async() => {
             const data = await handleFetch('GET',
                 {},
@@ -63,7 +62,7 @@ export const SingleToolView = () => {
             )
             setTool(data);
         })();
-    },[])
+    },[id, type])
 
     return <>
         <AppHeader/>
@@ -75,7 +74,7 @@ export const SingleToolView = () => {
             {
                 tool && <div style={styleObject.productContainer}>
                     <div style={styleObject.leftSide}>
-                        <img src={getProperImage(type)} style={styleObject.image}/>
+                        <img src={getProperImage(type)} style={styleObject.image} alt='icon'/>
                         <h3>{tool.name}</h3>
                     </div>
                     <ToolParamsTable tool={tool} />

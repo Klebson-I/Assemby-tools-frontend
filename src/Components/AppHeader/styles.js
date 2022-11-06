@@ -9,5 +9,8 @@ export const styleObject = {
     },
     accountIcon: {
         fontSize: '50px',
+    },
+    container: {
+        width: '100%',
     }
 }

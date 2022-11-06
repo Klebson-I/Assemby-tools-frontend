@@ -2,6 +2,13 @@ import {url} from "../constants";
 
 export const handleFetch = async (method, body, specificUrl, goodCallback, badCallback) => {
     let requestObject;
+
+    if (!specificUrl) {
+        return {
+            err: 'No url',
+        }
+    }
+
     if (method === 'GET') {
         requestObject = {
             method,
@@ -21,11 +28,15 @@ export const handleFetch = async (method, body, specificUrl, goodCallback, badCa
     }
     const data = await fetch(`${url}${specificUrl}`,requestObject);
 
+    const uncodeData = await data.json();
+
+    console.log(data);
+
     if (data.status === 200) {
-        goodCallback();
+        goodCallback(uncodeData);
     }
     else {
-        badCallback();
+        badCallback(uncodeData);
     }
-    return await data.json();
+    return uncodeData;
 }

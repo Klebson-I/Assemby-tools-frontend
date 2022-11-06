@@ -11,3 +11,6 @@ export const getProperImage = (type) => {
         default: break;
     }
 }
+
+export const isSomeToolAlreadySelected = (setToolState, toolParams) => setToolState[toolParams.type] !== {} &&
+    setToolState[toolParams.type].id === toolParams.id;

@@ -1,86 +1,46 @@
 import React, {useEffect, useState} from 'react';
 import {Button, ButtonGroup, Step, StepLabel, Stepper} from "@mui/material";
-import {handleFetch} from "../../Hooks/useFetch";
-import {ItemBlock} from "../ItemBlock/ItemBlock";
-
-const styleObject = {
-    container: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    buttonGroup: {
-        width: '100%',
-        marginTop: '100px'
-    },
-    button: {
-        width: '33%',
-        height: '200px',
-        fontSize: '50px'
-    },
-    buttonsDiv: {
-        width: '100%',
-    },
-    stepper: {
-        width: '100%',
-        marginTop: '50px',
-    },
-    toolsSelectContainer: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-    },
-}
-
-const ACTION_SELECT_ARRAYS = {
-    MILLING: [],
-    TURNING: ['Select cutting insert', 'Select turning holder', 'Select assembly item'],
-    DRILLING: ['Select drill', 'Select drill holder'],
-}
-
-const ACTIONS = ['MILLING', 'TURNING', 'DRILLING'];
-
-const fetchForItems = async (step, setItem ,goodCallback, badCallback) => {
-    let specificUrl ='';
-    switch (step) {
-        case 'Select cutting insert': specificUrl = 'cuttinginsert';break;
-        case 'Select turning holder': specificUrl = 'turningholder';break;
-        case 'Select assembly item': specificUrl = 'assemblyitem'; break;
-        default: break;
-    }
-    const items = await handleFetch(
-        'GET',
-        {},
-        specificUrl,
-        () => {},
-        () => {},
-    )
-    setItem(items);
-}
+import { ItemBlockForSetTool} from "../ItemBlockForSetTool/ItemBlockForSetTool";
+import {addToItemState} from "../../context/ItemsContext/actions";
+import {useSetToolState, useSetToolStateDispatch} from "../../context/SetToolContext/SetToolContext";
+import {styleObject} from "./style";
+import {ACTION_SELECT_ARRAYS, ACTIONS, ASSEMBLY_TOOL_OBJECT, fetchForItems, isSettingToolComplete} from "./utils";
+import {SelectionComplete} from "../SelectionComplete/SelectionComplete";
+import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
+import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
 
 export const SetToolContainer = () => {
     const [steps, setSteps] = useState([]);
     const [action, setAction] = useState('');
     const [stepIndex, setStepIndex] = useState(0);
-    const [isStepComplete, setIsStepComplete] = useState(true);
     const [items, setItems] = useState([]);
+    const [compareArray, setCompareArray] = useState([]);
+    const setToolStateDispatch = useSetToolStateDispatch();
+    const setToolState = useSetToolState();
+    const dispatchGlobalPopupState = useGlobalPopupDispatchState();
+
+    useEffect(() => {
+        if (!ACTIONS.includes(action)) {
+            return;
+        }
+        setToolStateDispatch(addToItemState(
+            ASSEMBLY_TOOL_OBJECT[action],
+        ));
+    },[action])
 
     const handleStepChange = (index) => {
-        if (!isStepComplete) {
+        if (!setToolState[ACTION_SELECT_ARRAYS[action][stepIndex]].id && index > stepIndex) {
             return;
         }
         setStepIndex(index);
+        setCompareArray([]);
     }
 
     useEffect(() => {
         if(action === '') {
             return;
         }
-        fetchForItems(steps[stepIndex], setItems);
+        fetchForItems(steps[stepIndex], setItems, setToolState);
     },[steps, action, stepIndex])
 
     useEffect(() => {
@@ -89,6 +49,16 @@ export const SetToolContainer = () => {
         }
         setSteps(ACTION_SELECT_ARRAYS[action]);
     },[action]);
+
+    useEffect(() => {
+        if(isSettingToolComplete(setToolState) && action!=='' && stepIndex === steps.length - 1) {
+            dispatchGlobalPopupState(addToGlobalPopupState({
+                isOpen: 'true',
+                component: <SelectionComplete/>,
+                headingText:'Selection is complete',
+            }))
+        }
+    },[setToolState]);
 
     return <div style={styleObject.container}>
         {
@@ -121,7 +91,12 @@ export const SetToolContainer = () => {
                 </Stepper>
                 <div style={styleObject.toolsSelectContainer}>
                     {
-                        items.map((item) => <ItemBlock key={item.id} toolParams={item} navigateDisable={true}/>)
+                        items.map((item) => <ItemBlockForSetTool
+                            key={item.id}
+                            toolParams={item}
+                            compareArray={compareArray}
+                            setCompareArray={setCompareArray}
+                        />)
                     }
                 </div>
             </>

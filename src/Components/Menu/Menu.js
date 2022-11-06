@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader} from "@mui/material";
 import {ExpandLess, ExpandMore, StarBorder, CleaningServices, Sync} from "@mui/icons-material";
+import TornadoOutlinedIcon from '@mui/icons-material/TornadoOutlined';
 import {useFilterState, useFilterStateDispatch} from "../../context/FilterContext/FilterContext";
 import {addToFilterState} from "../../context/FilterContext/actions";
 import {FILTER_TYPES} from "../../constants";
@@ -22,7 +23,8 @@ const stylesObject = {
 
 export const Menu = () => {
     const [openMilling, setOpenMilling] = useState(false);
-    const [openTurning, setOpenTurning] = useState(false)
+    const [openTurning, setOpenTurning] = useState(false);
+    const [openDrilling, setOpenDrilling] = useState(false)
     const filterState = useFilterState();
     const dispatchFilterState = useFilterStateDispatch();
 
@@ -32,6 +34,10 @@ export const Menu = () => {
 
     const handleTurningClick = () => {
         setOpenTurning(!openTurning);
+    }
+
+    const handleDrillingClick = () => {
+        setOpenDrilling(!openDrilling);
     }
 
     const isFilterActive = (text) => filterState.toolsFilter.includes(text);
@@ -111,6 +117,35 @@ export const Menu = () => {
                             <StarBorder />
                         </ListItemIcon>
                         <ListItemText primary="Assembly items" />
+                    </ListItemButton>
+                </List>
+            </Collapse>
+            <ListItemButton onClick={handleDrillingClick}>
+                <ListItemIcon>
+                    <TornadoOutlinedIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Drilling" />
+                {openDrilling ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openDrilling} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItemButton sx={{ pl: 4 }} >
+                        <ListItemIcon>
+                            <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary="Solid cutting tools" />
+                    </ListItemButton>
+                    <ListItemButton sx={{ pl: 4 }} >
+                        <ListItemIcon>
+                            <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary="Drill adaptors" />
+                    </ListItemButton>
+                    <ListItemButton sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary="Drill collets and sleeves" />
                     </ListItemButton>
                 </List>
             </Collapse>
