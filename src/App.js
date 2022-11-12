@@ -8,6 +8,8 @@ import {addToItemState} from "./context/ItemsContext/actions";
 import {useFilterState} from "./context/FilterContext/FilterContext";
 import {GlobalPopup} from "./Components/GlobalPopup/GlobalPopup";
 import { useGlobalPopupState} from "./context/GlobalPopupContext/GlobalPopupContext";
+import {InfoPopup} from "./Components/InfoPopup/InfoPopup";
+import {useInfoPopupState} from "./context/InfoContext/InfoContext";
 
 export const stylesObjectForGlobalPopup = {
     containerDiv: {
@@ -32,6 +34,7 @@ export function App() {
     const filterState = useFilterState();
     const dispatchItemState = useItemStateDispatch();
     const globalPopupState = useGlobalPopupState();
+    const infoPopupState = useInfoPopupState();
 
     useEffect(()=> {
         (async() => {
@@ -54,6 +57,7 @@ export function App() {
       />
       }
       {globalPopupState.isOpen && <div style={stylesObjectForGlobalPopup.globalCurtain}/>}
+      {infoPopupState.isOpen && <InfoPopup text={infoPopupState.text} severity={infoPopupState.severity} />}
         <AppHeader/>
             <div style={stylesObjectForGlobalPopup.containerDiv}>
                 <ActionSelectContainer/>

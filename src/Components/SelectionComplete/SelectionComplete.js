@@ -7,6 +7,8 @@ import {ItemBlock} from "../ItemBlock/ItemBlock";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
 import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
 import {handleFetch} from "../../Hooks/useFetch";
+import {useInfoPopupDispatchState} from "../../context/InfoContext/InfoContext";
+import {addToInfoPopupState} from "../../context/InfoContext/actions";
 
 const styleObject = {
     selectedItemsContainer: {
@@ -40,6 +42,7 @@ export const SelectionComplete = () => {
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
     const [isNameValid, setIsNameValid] = useState(false);
     const [name, setName] = useState('');
+    const infoPopupStateDispatch = useInfoPopupDispatchState();
 
     const getItemsObjectsFromState = () => {
         return Object.values(setToolState).filter((stateProperty) => typeof stateProperty === 'object')
@@ -58,8 +61,23 @@ export const SelectionComplete = () => {
                 name,
             },
             'settool',
-            () => {},
-            () => {},
+            ({msg}) => {
+                infoPopupStateDispatch(addToInfoPopupState({
+                    isOpen: true,
+                    text: msg,
+                    severity: 'success',
+                }));
+                dispatchGlobalPopupState(addToGlobalPopupState({
+                    isOpen: false,
+                }))
+            },
+            ({msg}) => {
+                infoPopupStateDispatch(addToInfoPopupState({
+                    isOpen: true,
+                    text: msg,
+                    severity: 'error',
+                }))
+            },
         );
     };
 

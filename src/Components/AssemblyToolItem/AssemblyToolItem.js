@@ -7,6 +7,10 @@ import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/Glob
 import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
 import React from "react";
 import {handleFetch} from "../../Hooks/useFetch";
+import {useInfoPopupDispatchState} from "../../context/InfoContext/InfoContext";
+import {addToInfoPopupState} from "../../context/InfoContext/actions";
+import {url} from "../../constants";
+import fileSaver from 'file-saver';
 
 const styleObject = {
     toolContainer: {
@@ -56,23 +60,37 @@ const styleObject = {
 
 export const AssemblyToolItem = ({assemblyTool, setRefreshToggle}) => {
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
+    const infoPopupDispatch = useInfoPopupDispatchState();
 
-    const getXML = () => {
-
+    const getXML = async () => {
+        const res = await fetch(`${url}xml/${assemblyTool.id}`);
+        const blob = await res.blob();
+        fileSaver.saveAs(blob, 'tool.xml');
+        console.log(res, blob);
     };
 
     const deleteAssemblyTool = () => handleFetch(
             'DELETE',
             {},
             `settool/${assemblyTool.id}`,
-            (res) => {
-                console.log(res.msg);
+            ({msg}) => {
                 setRefreshToggle((prev) => !prev);
                 dispatchGlobalPopupState(addToGlobalPopupState({
                     isOpen: false,
+                }));
+                infoPopupDispatch(addToInfoPopupState({
+                    isOpen: true,
+                    text: msg,
+                    severity: 'success'
                 }))
             },
-            (res) => { console.log(res.msg) },
+            ({msg}) => {
+                infoPopupDispatch(addToInfoPopupState({
+                    isOpen: true,
+                    text: msg,
+                    severity: 'error'
+                }))
+            },
         );
 
     const openDeleteDialog = () => {

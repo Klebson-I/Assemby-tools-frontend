@@ -12,6 +12,7 @@ import {SingleToolView} from "./Pages/SingleToolView";
 import {SetToolContext} from "./context/SetToolContext/SetToolContext";
 import {GlobalPopupContext} from "./context/GlobalPopupContext/GlobalPopupContext";
 import {UserAccount} from "./Pages/UserAccount";
+import {InfoPopupContext} from "./context/InfoContext/InfoContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -23,13 +24,15 @@ root.render(
                   <ItemContext>
                       <GlobalPopupContext>
                           <SetToolContext>
-                              <Routes>
-                                  <Route path={'/'} element={<Navigate to='/login'/>}/>
-                                  <Route path='/login' element={<Login/>}/>
-                                  <Route path='/app' element={<App/>}/>
-                                  <Route path='/app/singletool/:type/:id' element={<SingleToolView/>}/>
-                                  <Route path='/app/userAccount/' element={<UserAccount/>}/>
-                              </Routes>
+                              <InfoPopupContext>
+                                  <Routes>
+                                      <Route path={'/'} element={<Navigate to='/login'/>}/>
+                                      <Route path='/login' element={<Login/>}/>
+                                      <Route path='/app' element={<App/>}/>
+                                      <Route path='/app/singletool/:type/:id' element={<SingleToolView/>}/>
+                                      <Route path='/app/userAccount/' element={<UserAccount/>}/>
+                                  </Routes>
+                              </InfoPopupContext>
                           </SetToolContext>
                       </GlobalPopupContext>
                   </ItemContext>

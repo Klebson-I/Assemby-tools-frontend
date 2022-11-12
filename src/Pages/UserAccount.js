@@ -8,6 +8,9 @@ import {useNavigate} from "react-router-dom";
 import {GlobalPopup} from "../Components/GlobalPopup/GlobalPopup";
 import {useGlobalPopupState} from "../context/GlobalPopupContext/GlobalPopupContext";
 import {stylesObjectForGlobalPopup} from "../App";
+import {useInfoPopupDispatchState, useInfoPopupState} from "../context/InfoContext/InfoContext";
+import {addToInfoPopupState} from "../context/InfoContext/actions";
+import {InfoPopup} from "../Components/InfoPopup/InfoPopup";
 
 const styleObject = {
     container: {
@@ -32,18 +35,26 @@ export const UserAccount = () => {
     const navigate = useNavigate();
     const globalPopupState = useGlobalPopupState();
     const [refreshToggle, setRefreshToggle] = useState(false);
+    const infoPopupDispatch = useInfoPopupDispatchState();
+    const infoPopupState = useInfoPopupState();
 
     useEffect(() => {
         (async () => {
-            const assemblyToolsFromDatabase = await handleFetch(
+             await handleFetch(
                 'GET',
                 {},
                 'settool',
-                () => {},
-                () => {},
+                ({payload}) => {
+                    setAssemblyTools(payload || []);
+                },
+                ({msg}) => {
+                    infoPopupDispatch(addToInfoPopupState({
+                        isOpen: true,
+                        text: msg,
+                        severity: 'error',
+                    }));
+                },
             );
-            console.log(assemblyToolsFromDatabase);
-            setAssemblyTools(assemblyToolsFromDatabase || []);
         })();
     },[refreshToggle]);
 
@@ -57,6 +68,7 @@ export const UserAccount = () => {
             />
         }
         {globalPopupState.isOpen && <div style={stylesObjectForGlobalPopup.globalCurtain}/>}
+        {infoPopupState.isOpen && <InfoPopup text={infoPopupState.text} severity={infoPopupState.severity} />}
         <AppHeader/>
         <div style={styleObject.backArrowDiv}>
             <IconButton onClick={goBack}>
