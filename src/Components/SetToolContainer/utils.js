@@ -1,6 +1,6 @@
 import {handleFetch} from "../../Hooks/useFetch";
 
-export const MOVES_FOR_TURNING = ['CUTTING_INSERT', 'TURNING_HOLDER', 'ASSEMBLY_ITEM'];
+export const MOVES_FOR_TURNING = ['TURNING_HOLDER', 'CUTTING_INSERT', 'ASSEMBLY_ITEM'];
 export const MOVES_FOR_DRILLING = ['DRILL', 'DRILL_HOLDER'];
 
 export const ACTION_SELECT_ARRAYS = {
@@ -11,22 +11,22 @@ export const ACTION_SELECT_ARRAYS = {
 
 export const ACTIONS = ['MILLING', 'TURNING', 'DRILLING'];
 
-const getShapeAndSizeForHolderByInsert = (setToolState) => {
+const getShapeAndSizeForCuttingInsert = (setToolState) => {
     let item = setToolState?.[ACTION_SELECT_ARRAYS.TURNING[0]];
-    return item ? {shape: item.SC, size: item.IS} : {};
+    return item ? {shape: item.MTP, size: item.IS} : {};
  };
 
 const getProperUrlForItem = (step, setToolState) => {
     switch (step) {
-        case 'CUTTING_INSERT': {
-            return 'cuttinginsert';
-        }
         case 'TURNING_HOLDER': {
-            const {shape, size} = getShapeAndSizeForHolderByInsert(setToolState);
+            return 'turningholder';
+        }
+        case 'CUTTING_INSERT': {
+            const {shape, size} = getShapeAndSizeForCuttingInsert(setToolState);
             if (!shape || !size) {
-                throw new Error('There is no cutting insert select');
+                throw new Error('There is no turning holder select');
             }
-            return `turningholder/${shape}/${size}`;
+            return `cuttinginsert/${shape}/${size}`;
         }
         case 'ASSEMBLY_ITEM': {
             return 'assemblyitem';
@@ -50,6 +50,7 @@ export const fetchForItems = async (step, setItem, setToolState) => {
         () => {},
         () => {},
     );
+    console.log(items);
     // TODO jeśli pusta tablica to w zależności od stepu wyrzucić błąd
     setItem(items);
 };

@@ -92,7 +92,7 @@ export const SelectionComplete = () => {
     return <Paper elevation={0}>
         <div style={styleObject.selectedItemsContainer}>
             {
-                getItemsObjectsFromState().map((item) => <ItemBlock toolParams={item} navigationDisable={true}/>)
+                getItemsObjectsFromState().map((item, index) => <ItemBlock key={index} toolParams={item} navigationDisable={true}/>)
             }
         </div>
         <div style={styleObject.textfieldDiv}>

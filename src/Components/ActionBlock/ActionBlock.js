@@ -3,9 +3,11 @@ import {Paper} from "@mui/material";
 import {styleObject} from "./style";
 
 export const ActionBlock = ({
-    actionName
+    actionName,
+    image,
 }) => {
     return <Paper sx={styleObject.paper} elevation={5}>
-        {actionName}
+        <img src={image} style={styleObject.image}/>
+        <span>{actionName}</span>
     </Paper>
 }

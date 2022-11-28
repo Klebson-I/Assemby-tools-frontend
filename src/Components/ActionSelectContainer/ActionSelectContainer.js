@@ -10,6 +10,23 @@ import {useFilterState} from "../../context/FilterContext/FilterContext";
 import {styleObject} from "./style";
 import {SetToolContainer} from "../SetToolContainer/SetToolContainer";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
+import cylindricalBore from "../../images/cylindrical_bore.png";
+import cylindricalPocket from "../../images/cylindrical_pocket.png";
+import externalGroove from "../../images/external_groove.png";
+import internalGroove from "../../images/internal_groove.png";
+import surfacePlanning from '../../images/surface_planning.png';
+import standard from '../../images/standard.png';
+
+const getImageByActionName = (actionName) => {
+    switch (actionName) {
+        case 'internal groove': return internalGroove;
+        case 'external groove': return externalGroove;
+        case 'face planning': return surfacePlanning;
+        case 'cylindrical bore': return cylindricalBore;
+        case 'cylindrical pocket': return cylindricalPocket;
+        default: return standard;
+    }
+}
 
 export const ActionSelectContainer = () => {
     const [option, setOption] = useState('ACTIONS');
@@ -42,7 +59,11 @@ export const ActionSelectContainer = () => {
             {
                 option === 'ACTIONS' && appConstants.arrayOfActions
                     .filter((action) => action.includes(wordFilter))
-                    .map((action, index) => <ActionBlock actionName={action} key={index}/>
+                    .map((action, index) => <ActionBlock
+                        actionName={action}
+                        image={getImageByActionName(action)}
+                        key={index}
+                    />
                 )
             }
             {

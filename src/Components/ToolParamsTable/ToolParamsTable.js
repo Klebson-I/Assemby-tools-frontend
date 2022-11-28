@@ -9,7 +9,7 @@ import {Paper} from "@mui/material";
 
 const styleObject = {
     tableContainer: {
-        width: "45%",
+        width: "100%",
     }
 }
 

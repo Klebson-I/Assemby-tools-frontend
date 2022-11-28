@@ -19,6 +19,14 @@ export const SetToolContainer = () => {
     const setToolState = useSetToolState();
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
 
+    const getClassByAction = (action) => {
+        switch (action) {
+            case ACTIONS[2] : return styleObject.buttonDrill;
+            case ACTIONS[1]: return styleObject.buttonLathe;
+            case ACTIONS[0]: return styleObject.buttonMill;
+        }
+    };
+
     useEffect(() => {
         if (!ACTIONS.includes(action)) {
             return;
@@ -73,7 +81,7 @@ export const SetToolContainer = () => {
                         ACTIONS.map((action) => <Button
                             key={action}
                             onClick={() => setAction(action)}
-                            sx={styleObject.button}>
+                            sx={getClassByAction(action)}>
                             {action}
                         </Button>)
                     }

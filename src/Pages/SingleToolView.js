@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {AppHeader} from "../Components/AppHeader/AppHeader";
 import {SearchForAction} from "../Components/SearchForAction/SearchForAction";
-import {IconButton} from "@mui/material";
+import {IconButton, Paper} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {getProperImage} from "../Components/ItemBlockForSetTool/utils";
 import {handleFetch} from "../Hooks/useFetch";
@@ -34,7 +34,27 @@ const styleObject = {
         alignItems: 'center',
         flexDirection: 'column'
     },
-}
+    scrollContainer: {
+        padding: '10px',
+        width: '50%',
+        height: '65vh',
+        overflowY: 'auto',
+        '&::-webkit-scrollbar': {
+            width: '5px',
+            color: 'black',
+        },
+        '&::-webkit-scrollbar-track': {
+            boxShadow: 'inset 0 0 5px grey',
+            borderRadius: '10px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: 'black',
+            borderRadius: '10px',
+        },
+    },
+
+
+};
 
 const getUrlPrefixByToolType = (type) => {
     switch (type) {
@@ -70,14 +90,15 @@ export const SingleToolView = () => {
             <IconButton onClick={goBack}>
                 <ArrowBackIcon fontSize='large'/>
             </IconButton>
-            <SearchForAction searchText='Search for params'/>
             {
                 tool && <div style={styleObject.productContainer}>
                     <div style={styleObject.leftSide}>
                         <img src={getProperImage(type)} style={styleObject.image} alt='icon'/>
                         <h3>{tool.name}</h3>
                     </div>
-                    <ToolParamsTable tool={tool} />
+                    <Paper elevation={8} sx={styleObject.scrollContainer}>
+                        <ToolParamsTable tool={tool} />
+                    </Paper>
                 </div>
             }
         </div>
