@@ -16,7 +16,7 @@ const styleObject = {
         maxHeight: '500px',
         borderRadius: '10px',
         overflowX: 'hidden',
-        overflowY: 'scroll',
+        overflowY: 'auto',
     },
     topDiv: {
         width: '100%',

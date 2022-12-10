@@ -11,19 +11,27 @@ import {styleObject} from "./style";
 import {SetToolContainer} from "../SetToolContainer/SetToolContainer";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
 import cylindricalBore from "../../images/cylindrical_bore.png";
-import cylindricalPocket from "../../images/cylindrical_pocket.png";
 import externalGroove from "../../images/external_groove.png";
 import internalGroove from "../../images/internal_groove.png";
 import surfacePlanning from '../../images/surface_planning.png';
 import standard from '../../images/standard.png';
+import cutPipe from '../../images/cut pipe.png'
+import cutRod from '../../images/cut rod .png';
+import rectangularPocket from '../../images/rec pocket.png';
+import noThroughBore from '../../images/bore no throught.png';
+import openPocket from '../../images/open pocket 1.png';
 
 const getImageByActionName = (actionName) => {
     switch (actionName) {
-        case 'internal groove': return internalGroove;
-        case 'external groove': return externalGroove;
-        case 'face planning': return surfacePlanning;
-        case 'cylindrical bore': return cylindricalBore;
-        case 'cylindrical pocket': return cylindricalPocket;
+        case 'internal slot': return internalGroove;
+        case 'side slot': return externalGroove;
+        case 'surface planning': return surfacePlanning;
+        case 'through hole': return cylindricalBore;
+        case 'no-through hole': return noThroughBore;
+        case 'cut pipe': return cutPipe;
+        case 'cut bar': return cutRod;
+        case 'pocket': return rectangularPocket;
+        case 'open pocket': return openPocket;
         default: return standard;
     }
 }
@@ -41,6 +49,7 @@ export const ActionSelectContainer = () => {
             setTools(allItems);
         }
         else {
+            console.log(itemState);
             const filteredItems = Object?.values(itemState)
                 .flatMap((arr) => arr)
                 .filter((item) => filterState.toolsFilter.includes(item.type));

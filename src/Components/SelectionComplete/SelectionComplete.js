@@ -45,7 +45,9 @@ export const SelectionComplete = () => {
     const infoPopupStateDispatch = useInfoPopupDispatchState();
 
     const getItemsObjectsFromState = () => {
-        return Object.values(setToolState).filter((stateProperty) => typeof stateProperty === 'object')
+        return Object.values(setToolState).filter(
+            (stateProperty) => typeof stateProperty === 'object' && stateProperty.id
+        )
     };
 
     const goBack = () => dispatchGlobalPopupState(addToGlobalPopupState({

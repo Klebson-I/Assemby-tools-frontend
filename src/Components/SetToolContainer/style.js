@@ -18,7 +18,7 @@ export const styleObject = {
         width: '33%',
         height: '200px',
         fontSize: '50px',
-        transition: 'ease-in-out 0.2s',
+        transition: 'ease-in-out 0.3s',
         backgroundPosition: 'center',
         '&:hover': {
             height: '300px',
@@ -32,13 +32,12 @@ export const styleObject = {
             fontWeight: '1000',
             backgroundPosition: 'center',
         },
-
     },
     buttonLathe: {
         width: '33%',
         height: '200px',
         fontSize: '50px',
-        transition: 'ease-in-out 0.2s',
+        transition: 'ease-in-out 0.3s',
         backgroundPosition: 'center',
         '&:hover': {
             height: '300px',
@@ -58,7 +57,7 @@ export const styleObject = {
         width: '33%',
         height: '200px',
         fontSize: '50px',
-        transition: 'ease-in-out 0.2s',
+        transition: 'ease-in-out 0.3s',
         backgroundPosition: 'center',
         '&:hover': {
             height: '300px',

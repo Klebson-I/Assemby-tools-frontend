@@ -18,10 +18,7 @@ export const AppHeader = () => {
     const [textToWrite, setTextToWrite] = useState('');
     const [restartIntervalToggle, setRestartIntervalToggle] = useState(false);
 
-    const setText = (counter) => {
-        console.log(counter);
-        setTextToWrite(prev => prev += actualText[counter]);
-    };
+    const setText = (counter) => setTextToWrite(prev => prev += actualText[counter]);
 
     useEffect(() => {
         let counter = 0;

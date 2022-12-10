@@ -1,0 +1,31 @@
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 3rem;
+}
+.singleSlide{
+    width: 30%;
+    border: 1px solid green;
+    cursor: pointer;
+}
+.singleSlideDisabled{
+    width: 30%;
+    opacity: 0.3;
+}
+.miniImage{
+    width: 100%;
+}
+.arrowDiv{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+    transition: ease-in-out 0.1s;
+}
+.arrowDiv:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+}

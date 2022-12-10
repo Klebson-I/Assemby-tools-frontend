@@ -30,10 +30,6 @@ export const handleFetch = async (method, body, specificUrl, goodCallback, badCa
 
     const uncodeData = await data.json();
 
-    console.log(uncodeData);
-
-    console.log(data);
-
     if (data.status === 200) {
         goodCallback(uncodeData);
     }

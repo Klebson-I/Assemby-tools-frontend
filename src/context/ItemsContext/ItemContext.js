@@ -9,6 +9,9 @@ export const ItemContext = ({ children }) => {
         assemblyItems: [],
         turningHolderItems: [],
         cuttingInsertItems: [],
+        millingHolderItems: [],
+        monoMillingTools: [],
+        cuttingInsertMill: [],
     });
     return <itemStateContext.Provider value={itemState}>
         <itemStateDispatchContext.Provider value={dispatchItemState}>

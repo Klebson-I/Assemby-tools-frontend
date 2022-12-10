@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Paper} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -6,6 +6,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
+import {handleFetch} from "../../Hooks/useFetch";
 
 const styleObject = {
     tableContainer: {
@@ -25,9 +26,9 @@ const styleObject = {
 
 const restrictedParamsName = ['type', 'id'];
 
-const isValueEqual = (paramWithValue, toolArray) => {
+const isValueEqual = (name, value, toolArray) => {
     const [firstItem, secondItem] = toolArray;
-    if (firstItem[paramWithValue[0]] === secondItem[paramWithValue[0]]) {
+    if (firstItem[name] === secondItem[name]) {
         return {
             backgroundColor: '#cef6be'
         }
@@ -36,6 +37,20 @@ const isValueEqual = (paramWithValue, toolArray) => {
 };
 
 export const CompareTable = ({toolArray}) => {
+
+    const [params, setParams] = useState([]);
+    useEffect(() => {
+        (async() => {
+            const data = await handleFetch('GET',
+                {},
+                `params`,
+                () => {},
+                () => {},
+            )
+            setParams(data);
+        })();
+    },[setParams]);
+    const getUnityByParamName = (name) => (params.find(({param_id}) => name === param_id))?.unit || "---"
 
     return <div style={styleObject.tablesContainer}>
         {
@@ -62,12 +77,12 @@ export const CompareTable = ({toolArray}) => {
                         {
                             Object.entries(tool)
                                 .filter((tool) => !restrictedParamsName.includes(tool[0]))
-                                .map((paramWithValue, index) =>
-                                <TableRow key={index} sx={isValueEqual(paramWithValue, toolArray)}>
-                                <TableCell>{paramWithValue[0]}</TableCell>
+                                .map(([name, value], index) =>
+                                <TableRow key={index} sx={isValueEqual(name, value, toolArray)}>
+                                <TableCell>{name}</TableCell>
                                 <TableCell sx={{maxWidth: '200px'}}>Description of the param</TableCell>
-                                <TableCell>{paramWithValue[1]}</TableCell>
-                                <TableCell>Unity</TableCell>
+                                <TableCell>{value}</TableCell>
+                                <TableCell>{getUnityByParamName(name)}</TableCell>
                             </TableRow>)
                         }
                     </TableBody>

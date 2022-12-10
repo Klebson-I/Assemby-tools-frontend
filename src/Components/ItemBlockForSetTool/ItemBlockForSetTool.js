@@ -27,7 +27,7 @@ export const ItemBlockForSetTool = ({toolParams, compareArray, setCompareArray})
     },[compareArray])
 
     useEffect(() => {
-        const isToolSelectedInToolState = setToolState[toolParams.type].id === toolParams.id;
+        const isToolSelectedInToolState = setToolState[toolParams.type]?.id === toolParams.id;
         setIsToolSelect(isToolSelectedInToolState);
     },[toolParams.type, toolParams.id, setToolState]);
 
@@ -36,6 +36,17 @@ export const ItemBlockForSetTool = ({toolParams, compareArray, setCompareArray})
             setToolStateDispatch(addToSetToolState({
                 [`${toolParams.type}`]: toolParams,
             }))
+            //TODO to separate function
+            if (['END_MILL_MONO_HOLDER', 'END_MILL_HOLDER', 'DISC_CUTTER_HOLDER'].includes(toolParams.type)) {
+                const arr = ['END_MILL_MONO_HOLDER', 'END_MILL_HOLDER', 'DISC_CUTTER_HOLDER'].filter(
+                    (item) => item !== toolParams.type
+                )
+                for (let item of arr) {
+                    setToolStateDispatch(addToSetToolState({
+                        [item]: {},
+                    }))
+                }
+            }
             return;
         }
         setToolStateDispatch(addToSetToolState({
@@ -44,6 +55,7 @@ export const ItemBlockForSetTool = ({toolParams, compareArray, setCompareArray})
     };
 
     useEffect(() => {
+        console.log(toolParams)
         if (isSomeToolAlreadySelected(setToolState, toolParams)) {
             setIsToolSelect(true);
             return;

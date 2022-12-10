@@ -4,7 +4,14 @@ import { ItemBlockForSetTool} from "../ItemBlockForSetTool/ItemBlockForSetTool";
 import {addToItemState} from "../../context/ItemsContext/actions";
 import {useSetToolState, useSetToolStateDispatch} from "../../context/SetToolContext/SetToolContext";
 import {styleObject} from "./style";
-import {ACTION_SELECT_ARRAYS, ACTIONS, ASSEMBLY_TOOL_OBJECT, fetchForItems, isSettingToolComplete} from "./utils";
+import {
+    ACTION_SELECT_ARRAYS,
+    ACTIONS,
+    ASSEMBLY_TOOL_OBJECT,
+    fetchForItems,
+    isSettingToolComplete,
+    setActionForMilling
+} from "./utils";
 import {SelectionComplete} from "../SelectionComplete/SelectionComplete";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
 import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
@@ -58,6 +65,7 @@ export const SetToolContainer = () => {
         setSteps(ACTION_SELECT_ARRAYS[action]);
     },[action]);
 
+
     useEffect(() => {
         if(isSettingToolComplete(setToolState) && action!=='' && stepIndex === steps.length - 1) {
             dispatchGlobalPopupState(addToGlobalPopupState({
@@ -67,6 +75,16 @@ export const SetToolContainer = () => {
             }))
         }
     },[setToolState]);
+
+    useEffect(() => {
+        setActionForMilling({
+            setToolState,
+            setAction,
+            steps,
+            stepIndex,
+            setToolStateDispatch,
+        })
+    },[setToolState])
 
     return <div style={styleObject.container}>
         {

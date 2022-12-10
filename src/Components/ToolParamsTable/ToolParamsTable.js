@@ -13,7 +13,11 @@ const styleObject = {
     }
 }
 
-export const ToolParamsTable = ({tool}) => {
+export const ToolParamsTable = ({tool, params}) => {
+    const getDescriptionByParamName = (name) => (params.find(({param_id}) => name === param_id))?.description;
+
+    const getUnityByParamName = (name) => (params.find(({param_id}) => name === param_id))?.unit || "---"
+
     return <TableContainer component={Paper} sx={styleObject.tableContainer}>
         <Table>
             <TableHead>
@@ -34,11 +38,13 @@ export const ToolParamsTable = ({tool}) => {
             </TableHead>
             <TableBody>
                 {
-                    Object.entries(tool).map((paramWithValue, index) => <TableRow key={index}>
+                    Object.entries(tool)
+                        .filter(([,value]) => value !== null)
+                        .map((paramWithValue, index) => <TableRow key={index}>
                         <TableCell>{paramWithValue[0]}</TableCell>
-                        <TableCell sx={{maxWidth: '200px'}}>Description of the param</TableCell>
+                        <TableCell sx={{maxWidth: '200px'}}>{getDescriptionByParamName(paramWithValue[0])}</TableCell>
                         <TableCell>{paramWithValue[1]}</TableCell>
-                        <TableCell>Unity</TableCell>
+                        <TableCell>{getUnityByParamName(paramWithValue[0])}</TableCell>
                     </TableRow>)
                 }
             </TableBody>
