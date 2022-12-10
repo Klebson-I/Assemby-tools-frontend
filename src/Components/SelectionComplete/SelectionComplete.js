@@ -9,6 +9,7 @@ import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
 import {handleFetch} from "../../Hooks/useFetch";
 import {useInfoPopupDispatchState} from "../../context/InfoContext/InfoContext";
 import {addToInfoPopupState} from "../../context/InfoContext/actions";
+import {OPTIONAL_ID} from "../SetToolContainer/utils";
 
 const styleObject = {
     selectedItemsContainer: {
@@ -46,7 +47,7 @@ export const SelectionComplete = () => {
 
     const getItemsObjectsFromState = () => {
         return Object.values(setToolState).filter(
-            (stateProperty) => typeof stateProperty === 'object' && stateProperty.id
+            (stateProperty) => typeof stateProperty === 'object' && stateProperty.id && stateProperty.id !== OPTIONAL_ID
         )
     };
 

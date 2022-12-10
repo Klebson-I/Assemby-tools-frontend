@@ -53,4 +53,20 @@ export const styleObject = {
         left: '19px',
         top: '19px',
     },
+    paperOptional: {
+        width: '30%',
+        marginTop: '20px',
+        minHeight:'200px',
+        fontSize: '20px',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent:'center',
+        transition: 'ease-in 0.1s',
+        paddingBottom: '5px',
+        margin: '10px',
+        position: 'relative',
+        cursor: 'pointer',
+        backgroundColor: '#c4daf5'
+    },
 };

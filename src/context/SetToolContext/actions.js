@@ -1,3 +1,4 @@
+export const RESET = 'RESET';
 export const ADD = 'ADD';
 
 export const addToSetToolState = (payload) => {
@@ -8,3 +9,9 @@ export const addToSetToolState = (payload) => {
         },
     };
 };
+
+export const resetItemState = () => {
+    return {
+        type: RESET,
+    }
+}

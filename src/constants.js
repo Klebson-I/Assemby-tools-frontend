@@ -16,4 +16,6 @@ export const FILTER_TYPES = {
     bit: 'BIT',
     key: 'KEY',
     torqueWrench: 'TORQUE_WRENCH',
+    iso50: 'ISO50',
+    collet: 'COLLET',
 }

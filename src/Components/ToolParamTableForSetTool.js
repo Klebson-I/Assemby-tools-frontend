@@ -53,6 +53,7 @@ export const ToolParamsTableForSetTool = ({tool}) => {
                 {
                     Object.entries(tool)
                         .filter((tool) => !restrictedParamsName.includes(tool[0]))
+                        .filter(([,value]) => value)
                         .map(([name, value], index) => <TableRow key={index}>
                         <TableCell>{name}</TableCell>
                         <TableCell>{value}</TableCell>

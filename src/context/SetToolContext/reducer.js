@@ -1,4 +1,5 @@
-import {ADD} from './actions';
+import {ADD, RESET} from './actions';
+
 
 export const reducer = (state, {type, payload}) => {
     switch (type) {
@@ -6,6 +7,7 @@ export const reducer = (state, {type, payload}) => {
             ...state,
             ...payload,
         };
+        case RESET : return {};
         default: return {};
     };
 }

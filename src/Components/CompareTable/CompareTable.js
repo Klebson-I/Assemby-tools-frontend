@@ -77,6 +77,7 @@ export const CompareTable = ({toolArray}) => {
                         {
                             Object.entries(tool)
                                 .filter((tool) => !restrictedParamsName.includes(tool[0]))
+                                .filter(([,value]) => value)
                                 .map(([name, value], index) =>
                                 <TableRow key={index} sx={isValueEqual(name, value, toolArray)}>
                                 <TableCell>{name}</TableCell>

@@ -6,15 +6,16 @@ import {useSetToolState, useSetToolStateDispatch} from "../../context/SetToolCon
 import {styleObject} from "./style";
 import {
     ACTION_SELECT_ARRAYS,
-    ACTIONS,
+    ACTIONS, arrayOfMillTypes,
     ASSEMBLY_TOOL_OBJECT,
-    fetchForItems,
-    isSettingToolComplete,
+    fetchForItems, getInfoHeaderText,
+    isSettingToolComplete, optionalSteps,
     setActionForMilling
 } from "./utils";
 import {SelectionComplete} from "../SelectionComplete/SelectionComplete";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
 import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
+import {resetItemState} from "../../context/SetToolContext/actions";
 
 export const SetToolContainer = () => {
     const [steps, setSteps] = useState([]);
@@ -25,6 +26,7 @@ export const SetToolContainer = () => {
     const setToolStateDispatch = useSetToolStateDispatch();
     const setToolState = useSetToolState();
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
+    const [infoHeader, setInfoHeader] = useState("");
 
     const getClassByAction = (action) => {
         switch (action) {
@@ -38,6 +40,7 @@ export const SetToolContainer = () => {
         if (!ACTIONS.includes(action)) {
             return;
         }
+        setToolStateDispatch(resetItemState());
         setToolStateDispatch(addToItemState(
             ASSEMBLY_TOOL_OBJECT[action],
         ));
@@ -55,7 +58,12 @@ export const SetToolContainer = () => {
         if(action === '') {
             return;
         }
-        fetchForItems(steps[stepIndex], setItems, setToolState);
+        const stepName = steps[stepIndex];
+        setInfoHeader("")
+        if (optionalSteps.includes(stepName)) {
+            setInfoHeader(getInfoHeaderText[stepName])
+        }
+        fetchForItems(stepName, setItems, setToolState);
     },[steps, action, stepIndex])
 
     useEffect(() => {
@@ -68,6 +76,7 @@ export const SetToolContainer = () => {
 
     useEffect(() => {
         if(isSettingToolComplete(setToolState) && action!=='' && stepIndex === steps.length - 1) {
+            console.log('oh no')
             dispatchGlobalPopupState(addToGlobalPopupState({
                 isOpen: 'true',
                 component: <SelectionComplete/>,
@@ -77,13 +86,16 @@ export const SetToolContainer = () => {
     },[setToolState]);
 
     useEffect(() => {
-        setActionForMilling({
-            setToolState,
-            setAction,
-            steps,
-            stepIndex,
-            setToolStateDispatch,
-        })
+        const actualSelected = arrayOfMillTypes.find((key) => setToolState[key]?.id);
+        if (setToolState.action === 'MILLING' && actualSelected !== steps[stepIndex]) {
+            setActionForMilling({
+                setToolState,
+                setAction,
+                steps,
+                stepIndex,
+                setToolStateDispatch,
+            })
+        }
     },[setToolState])
 
     return <div style={styleObject.container}>
@@ -115,6 +127,13 @@ export const SetToolContainer = () => {
                         </Step>
                     ))}
                 </Stepper>
+                {
+                    infoHeader && <div>
+                        <h1>
+                            {infoHeader}
+                        </h1>
+                    </div>
+                }
                 <div style={styleObject.toolsSelectContainer}>
                     {
                         items.map((item) => <ItemBlockForSetTool
