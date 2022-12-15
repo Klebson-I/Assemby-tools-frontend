@@ -76,7 +76,6 @@ export const SetToolContainer = () => {
 
     useEffect(() => {
         if(isSettingToolComplete(setToolState) && action!=='' && stepIndex === steps.length - 1) {
-            console.log('oh no')
             dispatchGlobalPopupState(addToGlobalPopupState({
                 isOpen: 'true',
                 component: <SelectionComplete/>,

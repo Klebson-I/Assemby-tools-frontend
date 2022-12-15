@@ -17,11 +17,11 @@ const styleObject = {
         display: 'flex',
         margin: '50px 0',
         width: '95%',
-        justifyContent: 'space-evenly',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     infoContainer: {
-        width: '25%',
+        minWidth: '25%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
