@@ -3,7 +3,7 @@ import {Checkbox, IconButton, Paper, Tooltip} from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import {styleObject} from "./styles";
-import {getProperImage, isSomeToolAlreadySelected, toggleBetweenDifferentHolders} from "./utils";
+import {getProperImage, isSomeToolAlreadySelected} from "./utils";
 import {useSetToolState, useSetToolStateDispatch} from "../../context/SetToolContext/SetToolContext";
 import {addToSetToolState} from "../../context/SetToolContext/actions";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
@@ -34,10 +34,9 @@ export const ItemBlockForSetTool = ({toolParams, compareArray, setCompareArray})
 
     const handleAssemblyClick = () => {
         if (!isToolSelect) {
-            setToolStateDispatch(addToSetToolState({
+            return setToolStateDispatch(addToSetToolState({
                 [`${toolParams.type}`]: toolParams,
             }))
-            return toggleBetweenDifferentHolders(toolParams, setToolStateDispatch);
         }
         setToolStateDispatch(addToSetToolState({
             [`${toolParams.type}`]: {},
@@ -46,8 +45,7 @@ export const ItemBlockForSetTool = ({toolParams, compareArray, setCompareArray})
 
     useEffect(() => {
         if (isSomeToolAlreadySelected(setToolState, toolParams)) {
-            setIsToolSelect(true);
-            return;
+            return setIsToolSelect(true);
         }
         setIsToolSelect(false);
     },[setToolState]);

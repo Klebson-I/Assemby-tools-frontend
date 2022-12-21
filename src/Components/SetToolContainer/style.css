@@ -1,0 +1,32 @@
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.stepper{
+    width: 100%;
+    margin-top: 0;
+}
+
+.toolsSelectContainer{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.paramButton {
+    width: 50%;
+}
+.paramButton__span {
+    font-size: 25px;
+}
+.paramButtonDiv{
+    width: 100%;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}

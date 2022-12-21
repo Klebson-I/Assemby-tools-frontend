@@ -86,6 +86,7 @@ const getUrlPrefixByToolType = (type) => {
         case FILTER_TYPES.bit: return 'assemblyMillItem';
         case FILTER_TYPES.torqueWrench: return 'assemblyMillItem';
         case FILTER_TYPES.cassette: return 'assemblyMillItem';
+        case FILTER_TYPES.drill: return 'drill';
         default: break;
     }
 };
@@ -132,6 +133,7 @@ const getImageFunctionObject = {
     [`${FILTER_TYPES.wedgeScrew}`]: getParamsImagesForAssemblyItem,
     [`${FILTER_TYPES.clampingWedgeMill}`]: getParamsImagesForAssemblyItem,
     [`${FILTER_TYPES.cassette}`]: getParamsImagesForAssemblyItem,
+    [`${FILTER_TYPES.drill}`]: getParamsImagesForAssemblyItem,
 };
 
 const getParamsImages = (tool) => getImageFunctionObject[tool.type](tool);

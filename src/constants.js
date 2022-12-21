@@ -18,4 +18,5 @@ export const FILTER_TYPES = {
     torqueWrench: 'TORQUE_WRENCH',
     iso50: 'ISO50',
     collet: 'COLLET',
+    drill: 'DRILL',
 }

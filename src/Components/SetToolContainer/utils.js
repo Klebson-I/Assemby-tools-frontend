@@ -1,12 +1,9 @@
 import {handleFetch} from "../../Hooks/useFetch";
-import {addToSetToolState} from "../../context/SetToolContext/actions";
 
 export const MOVES_FOR_TURNING = ['TURNING_HOLDER', 'CUTTING_INSERT', 'ASSEMBLY_ITEM'];
-export const MOVES_FOR_DRILLING = ['DRILL', 'DRILL_HOLDER'];
-export const MOVES_FOR_MILLING_START = ['MILL HOLDER / MILL TOOL'];
+export const MOVES_FOR_DRILLING = ['DRILL', 'ISO50', 'COLLET'];
 
 export const ACTION_SELECT_ARRAYS = {
-    MILLING: MOVES_FOR_MILLING_START,
     TURNING: MOVES_FOR_TURNING,
     DRILLING: MOVES_FOR_DRILLING,
     END_MILL_MONO_HOLDER: ['END_MILL_MONO_HOLDER', 'ISO50', 'COLLET'],
@@ -18,11 +15,6 @@ export const ACTION_SELECT_ARRAYS = {
 export const ACTIONS = ['MILLING', 'TURNING', 'DRILLING'];
 
 export const arrayOfMillTypes =  ['DISC_CUTTER_HOLDER', 'END_MILL_HOLDER', 'END_MILL_MONO_HOLDER'];
-
-const arrayOfStepsToChangeMillAction = [
-    ...arrayOfMillTypes,
-    'MILL HOLDER / MILL TOOL',
-];
 
 export const optionalSteps = ['TORQUE_WRENCH', 'ISO50', 'COLLET']
 
@@ -39,43 +31,15 @@ const getShapeAndSizeForCuttingInsertMilling = (setToolState) => {
     return MTP && IS ? {shape: MTP, size: IS} : {};
 };
 
-const resetAssembliesFromPrevMillType = (setToolState, keyToLeft, setToolStateDispatch) => {
-    const arrayOfKeysToLeave = [keyToLeft, 'action'];
-    const keysToReset = Object.keys(setToolState).filter((key) =>
-        !arrayOfKeysToLeave.includes(key));
-    const updateObject = {};
-    for (let key of keysToReset) {
-        updateObject[key] = {};
-    }
-    setToolStateDispatch(addToSetToolState({
-        ...setToolState,
-        ...updateObject,
-    }))
-};
 
 const checkIsMillingAssemblyComplete = (setToolState) => {
-    const actionKey = arrayOfMillTypes.find((key) => setToolState[key].id);
+    const actionKey = arrayOfMillTypes.find((key) => setToolState[key]?.id);
     const steps = ACTION_SELECT_ARRAYS[actionKey];
     if (!steps) {
         return false;
     }
     return steps.every((step) => setToolState[step]?.id)
 };
-
-export const setActionForMilling = ({setToolState, setAction, steps, stepIndex, setToolStateDispatch}) => {
-    if (setToolState.DISC_CUTTER_HOLDER?.id && arrayOfStepsToChangeMillAction.includes(steps[stepIndex])) {
-        setAction('DISC_CUTTER_HOLDER');
-        resetAssembliesFromPrevMillType(setToolState, 'DISC_CUTTER_HOLDER', setToolStateDispatch);
-    }
-    else if (setToolState.END_MILL_HOLDER?.id && arrayOfStepsToChangeMillAction.includes(steps[stepIndex])) {
-        setAction('END_MILL_HOLDER');
-        resetAssembliesFromPrevMillType(setToolState, 'END_MILL_HOLDER', setToolStateDispatch);
-    }
-    else if (setToolState.END_MILL_MONO_HOLDER?.id && arrayOfStepsToChangeMillAction.includes(steps[stepIndex])) {
-        setAction('END_MILL_MONO_HOLDER');
-        resetAssembliesFromPrevMillType(setToolState, 'END_MILL_MONO_HOLDER', setToolStateDispatch);
-    }
-}
 
 export const getInfoHeaderText = {
     TORQUE_WRENCH: "This part is optional, if you don't want to take it - just select 'No selection'",
@@ -98,14 +62,11 @@ const getProperUrlForItem = (step, setToolState) => {
         case 'ASSEMBLY_ITEM': {
             return 'assemblyitem';
         }
-        case 'MILL HOLDER / MILL TOOL' : {
-            return 'millHolder/allMills';
-        }
         case 'DISC_CUTTER_HOLDER': {
-            return 'millHolder/allMills';
+            return 'millHolder/allMills/DISC_CUTTER_HOLDER';
         }
         case 'END_MILL_HOLDER': {
-            return 'millHolder/allMills';
+            return 'millHolder/allMills/END_MILL_HOLDER';
         }
         case 'END_MILL_MONO_HOLDER': {
             return 'monoMillTool';
@@ -116,7 +77,6 @@ const getProperUrlForItem = (step, setToolState) => {
         }
         case 'INSERT_FOR_MILL': {
             const {shape, size} = getShapeAndSizeForCuttingInsertMilling(setToolState);
-            console.log(shape)
             return `cuttingInsertMill/INSERT_FOR_MILL/${shape}/${size}`;
         }
         case 'KEY': {
@@ -146,6 +106,9 @@ const getProperUrlForItem = (step, setToolState) => {
         case 'COLLET': {
             return `assemblyMillItem/type/${step}`;
         }
+        case 'DRILL': {
+            return `drill`
+        }
     }
 }
 
@@ -166,8 +129,6 @@ export const fetchForItems = async (step, setItem, setToolState) => {
         () => {},
     );
 
-    // TODO jeśli pusta tablica to w zależności od stepu wyrzucić błąd
-
     if (optionalSteps.includes(step)) {
         items.push({
             id:OPTIONAL_ID,
@@ -185,12 +146,22 @@ export const ASSEMBLY_TOOL_OBJECT = {
         TURNING_HOLDER: {},
         ASSEMBLY_ITEM: {},
     },
-    MILLING: {
+    DISC_CUTTER_HOLDER: {
         action: 'MILLING',
-        END_MILL_MONO_HOLDER: {},
-        END_MILL_HOLDER: {},
         DISC_CUTTER_HOLDER: {},
         INSERT_FOR_SLOT_CUT: {},
+        CASSETTE: {},
+        INSERT_SCREW_MILL: {},
+        BIT: {},
+        KEY: {},
+        TORQUE_WRENCH: {},
+        CLAMPING_WEDGE_MILL: {},
+        WEDGE_SCREW: {},
+    },
+    END_MILL_HOLDER: {
+        action: 'MILLING',
+        END_MILL_HOLDER: {},
+        DISC_CUTTER_HOLDER: {},
         INSERT_FOR_MILL:{},
         CASSETTE: {},
         INSERT_SCREW_MILL: {},
@@ -199,11 +170,18 @@ export const ASSEMBLY_TOOL_OBJECT = {
         TORQUE_WRENCH: {},
         CLAMPING_WEDGE_MILL: {},
         WEDGE_SCREW: {},
+    },
+    END_MILL_MONO_HOLDER: {
+        action: 'MILLING',
+        END_MILL_MONO_HOLDER: {},
         COLLET: {},
         ISO50: {},
     },
     DRILLING: {
-
+        action: 'DRILLING',
+        DRILL: {},
+        COLLET: {},
+        ISO50: {},
     },
 };
 

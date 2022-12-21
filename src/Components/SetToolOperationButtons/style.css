@@ -1,0 +1,102 @@
+.buttonsDiv {
+    width: 100%;
+}
+.buttonGroup {
+    width: 100%;
+    margin-top: 100px;
+}
+
+.buttonMill:hover{
+     height: 300px;
+     background-image: url("../../images/milling_machine.png");
+     background-size: contain;
+     background-repeat: no-repeat;
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-end;
+     color: black;
+     font-weight: 1000;
+     background-position: center;
+}
+
+.buttonLathe:hover {
+    height: 300px;
+    background-image: url("../../images/lathe_machine.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: black;
+    font-weight: 1000;
+    background-position: center;
+}
+
+.buttonDrill:hover {
+    height: 300px;
+    background-image: url("../../images/drilling_machine.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: black;
+    font-weight: 1000;
+    background-position: center;
+}
+
+.monoEndMill:hover {
+    height: 300px;
+    background-image: url("../../images/mono_end_mill_holder.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: black;
+    font-weight: 1000;
+    background-position: center;
+}
+
+.discMill:hover {
+    height: 300px;
+    background-image: url("../../images/disc_mill_holder.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: black;
+    font-weight: 1000;
+    background-position: center;
+}
+
+.endMill:hover {
+    height: 300px;
+    background-image: url("../../images/end_mill_holder.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: black;
+    font-weight: 1000;
+    background-position: center;
+}
+.base {
+    width: 33%;
+    height: 200px;
+    font-size: 50px;
+    transition: ease-in-out 0.3s;
+    background-position: center;
+}
+
+.buttonText{
+    font-size: 50px;
+    text-shadow: 0 0 10px white;
+}
+
+.buttonTextMill{
+    font-size: 30px;
+    text-shadow: 0 0 10px white;
+}

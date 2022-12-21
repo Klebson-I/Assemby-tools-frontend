@@ -15,9 +15,8 @@ import keyImage from '../../images/key.png';
 import bitImage from '../../images/bit.jpg';
 import colletImage from '../../images/collet.jpg';
 import iso50Image from '../../images/iso50.jpg';
+import drillImage from '../../images/drill.png';
 import {FILTER_TYPES} from "../../constants";
-import {addToSetToolState} from "../../context/SetToolContext/actions";
-import {arrayOfMillTypes} from "../SetToolContainer/utils";
 
 export const getProperImage = (type) => {
     switch (type) {
@@ -38,22 +37,10 @@ export const getProperImage = (type) => {
         case FILTER_TYPES.bit: return bitImage;
         case FILTER_TYPES.iso50: return iso50Image;
         case FILTER_TYPES.collet: return colletImage;
+        case FILTER_TYPES.drill: return drillImage;
         default: break;
     }
 }
 
 export const isSomeToolAlreadySelected = (setToolState, toolParams) => setToolState[toolParams.type] !== {} &&
-    setToolState[toolParams.type].id === toolParams.id;
-
-export const toggleBetweenDifferentHolders = (toolParams, setToolStateDispatch) => {
-    if (arrayOfMillTypes.includes(toolParams.type)) {
-        const arrayOfKeysToReset = arrayOfMillTypes.filter(
-            (item) => item !== toolParams.type
-        );
-        for (let item of arrayOfKeysToReset) {
-            setToolStateDispatch(addToSetToolState({
-                [item]: {},
-            }))
-        }
-    }
-}
+    setToolState[toolParams.type]?.id === toolParams.id;

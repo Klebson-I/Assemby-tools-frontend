@@ -184,23 +184,23 @@ export const Menu = () => {
             </ListItemButton>
             <Collapse in={openDrilling} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} >
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.drill)} selected={isFilterActive(FILTER_TYPES.drill)}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
-                        <ListItemText primary="Solid cutting tools" />
+                        <ListItemText primary="Drills" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} >
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.collet)} selected={isFilterActive(FILTER_TYPES.collet)}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
-                        <ListItemText primary="Drill adaptors" />
+                        <ListItemText primary="Drill collets" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.iso50)} selected={isFilterActive(FILTER_TYPES.iso50)}>
                         <ListItemIcon>
                             <StarBorder />
                         </ListItemIcon>
-                        <ListItemText primary="Drill collets and sleeves" />
+                        <ListItemText primary="Drill iso50"/>
                     </ListItemButton>
                 </List>
             </Collapse>

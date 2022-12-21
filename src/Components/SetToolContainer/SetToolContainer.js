@@ -1,21 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {Button, ButtonGroup, Step, StepLabel, Stepper} from "@mui/material";
+import {Button, Step, StepLabel, Stepper} from "@mui/material";
 import { ItemBlockForSetTool} from "../ItemBlockForSetTool/ItemBlockForSetTool";
 import {addToItemState} from "../../context/ItemsContext/actions";
 import {useSetToolState, useSetToolStateDispatch} from "../../context/SetToolContext/SetToolContext";
-import {styleObject} from "./style";
 import {
     ACTION_SELECT_ARRAYS,
     ACTIONS, arrayOfMillTypes,
     ASSEMBLY_TOOL_OBJECT,
     fetchForItems, getInfoHeaderText,
     isSettingToolComplete, optionalSteps,
-    setActionForMilling
 } from "./utils";
 import {SelectionComplete} from "../SelectionComplete/SelectionComplete";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
 import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
 import {resetItemState} from "../../context/SetToolContext/actions";
+import {SetToolOperationButtons} from "../SetToolOperationButtons/SetToolOperationButtons";
+import './style.css';
+import {ParamFilter} from "../ParamFilter/ParamFilter";
+
+const stepStrChange = (str) =>
+    str.toLowerCase()
+    .replaceAll('_', ' ');
 
 export const SetToolContainer = () => {
     const [steps, setSteps] = useState([]);
@@ -27,17 +32,23 @@ export const SetToolContainer = () => {
     const setToolState = useSetToolState();
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
     const [infoHeader, setInfoHeader] = useState("");
-
-    const getClassByAction = (action) => {
-        switch (action) {
-            case ACTIONS[2] : return styleObject.buttonDrill;
-            case ACTIONS[1]: return styleObject.buttonLathe;
-            case ACTIONS[0]: return styleObject.buttonMill;
-        }
-    };
+    const [isParamFilterOpen, setIsParamFilterOpen] = useState(false);
+    const dispatchPopupState = useGlobalPopupDispatchState();
 
     useEffect(() => {
-        if (!ACTIONS.includes(action)) {
+        if (!isParamFilterOpen) {
+            return;
+        }
+        const toolWithParam = items[0];
+        dispatchGlobalPopupState(addToGlobalPopupState({
+            isOpen: true,
+            component: <ParamFilter tool={toolWithParam}/>,
+            headingText: 'Select param to search'
+        }))
+    },[isParamFilterOpen])
+
+    useEffect(() => {
+        if (!ACTIONS.concat(arrayOfMillTypes).includes(action)) {
             return;
         }
         setToolStateDispatch(resetItemState());
@@ -84,45 +95,16 @@ export const SetToolContainer = () => {
         }
     },[setToolState]);
 
-    useEffect(() => {
-        const actualSelected = arrayOfMillTypes.find((key) => setToolState[key]?.id);
-        if (setToolState.action === 'MILLING' && actualSelected !== steps[stepIndex]) {
-            setActionForMilling({
-                setToolState,
-                setAction,
-                steps,
-                stepIndex,
-                setToolStateDispatch,
-            })
-        }
-    },[setToolState])
-
-    return <div style={styleObject.container}>
+    return <div className='container'>
         {
-            action === '' && <div style={styleObject.buttonsDiv}>
-                <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="Disabled elevation buttons"
-                    sx={styleObject.buttonGroup}
-                >
-                    {
-                        ACTIONS.map((action) => <Button
-                            key={action}
-                            onClick={() => setAction(action)}
-                            sx={getClassByAction(action)}>
-                            {action}
-                        </Button>)
-                    }
-                </ButtonGroup>
-            </div>
+            action === '' && <SetToolOperationButtons setAction={setAction}/>
         }
         {
             action !== '' && <>
-                <Stepper activeStep={stepIndex} alternativeLabel sx={styleObject.stepper}>
+                <Stepper activeStep={stepIndex} alternativeLabel className='stepper'>
                     {steps.map((label, index) => (
                         <Step key={label} onClick={() => handleStepChange(index)}>
-                            <StepLabel>{label}</StepLabel>
+                            <StepLabel>{stepStrChange(label)}</StepLabel>
                         </Step>
                     ))}
                 </Stepper>
@@ -133,7 +115,18 @@ export const SetToolContainer = () => {
                         </h1>
                     </div>
                 }
-                <div style={styleObject.toolsSelectContainer}>
+                {
+                    items.length && <div className='paramButtonDiv'>
+                        <Button
+                            className='paramButton'
+                            variant='contained'
+                            onClick={() => setIsParamFilterOpen(true)}
+                        >
+                            <span className='paramButton__span'>Filter by param panel</span>
+                        </Button>
+                    </div>
+                }
+                <div className='toolsSelectContainer'>
                     {
                         items.map((item) => <ItemBlockForSetTool
                             key={item.id}

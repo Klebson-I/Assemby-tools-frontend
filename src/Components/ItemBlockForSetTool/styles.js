@@ -30,7 +30,7 @@ export const styleObject = {
         margin: '10px',
         position: 'relative',
         cursor: 'pointer',
-        border: '2px solid green',
+        border: '4px solid green',
     },
     image: {
         width: '50%',
