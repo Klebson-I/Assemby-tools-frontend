@@ -200,3 +200,25 @@ export const isSettingToolComplete = (setToolState) => {
         return !!value;
     })
 }
+
+export const filterParams = (items, paramsFilterState) => {
+    if (!paramsFilterState.length)  {
+        return items;
+    }
+    let filteredItems = [...items];
+    paramsFilterState.forEach((param) => {
+        filteredItems = filteredItems.filter((item) => {
+            const itemParamToFilter = item[`${param.name}`];
+            if (param.valueType === 'number') {
+                return Number(itemParamToFilter) >= Number(param.value.min) && Number(itemParamToFilter) <= Number(param.value.max)
+            }
+            if (param.valueType === 'string') {
+                return param.value === itemParamToFilter;
+            }
+            if (param.valueType === 'boolean') {
+                return Boolean(param.value) === Boolean(itemParamToFilter);
+            }
+        })
+    })
+    return filteredItems;
+};

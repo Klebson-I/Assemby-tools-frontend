@@ -10,6 +10,7 @@ import {GlobalPopup} from "./Components/GlobalPopup/GlobalPopup";
 import { useGlobalPopupState} from "./context/GlobalPopupContext/GlobalPopupContext";
 import {InfoPopup} from "./Components/InfoPopup/InfoPopup";
 import {useInfoPopupState} from "./context/InfoContext/InfoContext";
+import {ParamsFilterContext} from "./context/ParamsFilterContext/ParamsFilterContext";
 
 export const stylesObjectForGlobalPopup = {
     containerDiv: {
@@ -49,19 +50,21 @@ export function App() {
         })();
     },[filterState, dispatchItemState]);
 
-  return <div style={stylesObjectForGlobalPopup.global}>
-      {
-          globalPopupState.isOpen && <GlobalPopup
-          component={globalPopupState.component}
-          headingText={globalPopupState.headingText}
-      />
-      }
-      {globalPopupState.isOpen && <div style={stylesObjectForGlobalPopup.globalCurtain}/>}
-      {infoPopupState.isOpen && <InfoPopup text={infoPopupState.text} severity={infoPopupState.severity} />}
-        <AppHeader/>
+  return <ParamsFilterContext>
+        <div style={stylesObjectForGlobalPopup.global}>
+            {
+                globalPopupState.isOpen && <GlobalPopup
+                    component={globalPopupState.component}
+                    headingText={globalPopupState.headingText}
+                />
+            }
+            {globalPopupState.isOpen && <div style={stylesObjectForGlobalPopup.globalCurtain}/>}
+            {infoPopupState.isOpen && <InfoPopup text={infoPopupState.text} severity={infoPopupState.severity} />}
+            <AppHeader/>
             <div style={stylesObjectForGlobalPopup.containerDiv}>
                 <ActionSelectContainer/>
                 <Menu/>
             </div>
-  </div>
+        </div>
+    </ParamsFilterContext>
 }

@@ -58,15 +58,24 @@ const styleObject = {
     }
 };
 
+const HIDE_PARAM = {
+    TRUE: 1,
+    FALSE: 0,
+};
+
 export const AssemblyToolItem = ({assemblyTool, setRefreshToggle}) => {
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
     const infoPopupDispatch = useInfoPopupDispatchState();
 
-    const getXML = async () => {
-        const res = await fetch(`${url}xml/${assemblyTool.id}`);
+    const closeWindow = () => dispatchGlobalPopupState(addToGlobalPopupState({
+        isOpen: false,
+    }))
+
+    const getXML = async (hideParam) => {
+        const res = await fetch(`${url}xml/${assemblyTool.id}/${hideParam}`);
         const blob = await res.blob();
         fileSaver.saveAs(blob, 'tool.xml');
-        console.log(res, blob);
+        closeWindow();
     };
 
     const deleteAssemblyTool = () => handleFetch(
@@ -75,9 +84,7 @@ export const AssemblyToolItem = ({assemblyTool, setRefreshToggle}) => {
             `settool/${assemblyTool.id}`,
             ({msg}) => {
                 setRefreshToggle((prev) => !prev);
-                dispatchGlobalPopupState(addToGlobalPopupState({
-                    isOpen: false,
-                }));
+                closeWindow();
                 infoPopupDispatch(addToInfoPopupState({
                     isOpen: true,
                     text: msg,
@@ -104,9 +111,7 @@ export const AssemblyToolItem = ({assemblyTool, setRefreshToggle}) => {
                         variant='outlined'
                         color='primary'
                         sx={styleObject.actionPopupButton}
-                        onClick={() => dispatchGlobalPopupState(addToGlobalPopupState({
-                            isOpen: false,
-                        }))}
+                        onClick={closeWindow}
                         startIcon={<ArrowBackIcon fontSize='large'/>}
                     >
                         Back
@@ -126,6 +131,34 @@ export const AssemblyToolItem = ({assemblyTool, setRefreshToggle}) => {
         }))
     };
 
+    const openXMLDialog = () => {
+        dispatchGlobalPopupState(addToGlobalPopupState({
+            isOpen: true,
+            component: <div style={styleObject.popupDiv}>
+                <h2 style={styleObject.popupSecondHeader}>Do you want to hide unused tool parameters in XML file?</h2>
+                <div style={styleObject.popupButtonsDiv}>
+                    <Button
+                        variant='outlined'
+                        color='primary'
+                        sx={styleObject.actionPopupButton}
+                        onClick={() => getXML(HIDE_PARAM.TRUE)}
+                    >
+                        Yes
+                    </Button>
+                    <Button
+                        variant='outlined'
+                        color='error'
+                        sx={styleObject.actionPopupButton}
+                        onClick={() => getXML(HIDE_PARAM.FALSE)}
+                    >
+                        No
+                    </Button>
+                </div>
+            </div>,
+            headingText:'Hide parameters',
+        }))
+    };
+
     return <Paper sx={styleObject.toolContainer}>
         <div style={styleObject.infoContainer}>
             <Tooltip title='Tool name'><h2>{assemblyTool.name}</h2></Tooltip>
@@ -134,7 +167,7 @@ export const AssemblyToolItem = ({assemblyTool, setRefreshToggle}) => {
                     color='primary'
                     startIcon={<FileDownloadIcon/>}
                     sx={styleObject.actionButton}
-                    onClick={getXML}
+                    onClick={openXMLDialog}
                 >
                     Get XML
                 </Button>

@@ -13,3 +13,7 @@
     justify-content: space-evenly;
     margin: 10px 0;
 }
+
+.selectInput{
+    min-width: 150px;
+}

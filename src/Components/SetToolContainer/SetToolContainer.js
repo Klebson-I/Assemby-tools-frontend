@@ -7,7 +7,7 @@ import {
     ACTION_SELECT_ARRAYS,
     ACTIONS, arrayOfMillTypes,
     ASSEMBLY_TOOL_OBJECT,
-    fetchForItems, getInfoHeaderText,
+    fetchForItems, filterParams, getInfoHeaderText,
     isSettingToolComplete, optionalSteps,
 } from "./utils";
 import {SelectionComplete} from "../SelectionComplete/SelectionComplete";
@@ -17,6 +17,7 @@ import {resetItemState} from "../../context/SetToolContext/actions";
 import {SetToolOperationButtons} from "../SetToolOperationButtons/SetToolOperationButtons";
 import './style.css';
 import {ParamFilter} from "../ParamFilter/ParamFilter";
+import {useParamsFilterState} from "../../context/ParamsFilterContext/ParamsFilterContext";
 
 const stepStrChange = (str) =>
     str.toLowerCase()
@@ -33,7 +34,7 @@ export const SetToolContainer = () => {
     const dispatchGlobalPopupState = useGlobalPopupDispatchState();
     const [infoHeader, setInfoHeader] = useState("");
     const [isParamFilterOpen, setIsParamFilterOpen] = useState(false);
-    const dispatchPopupState = useGlobalPopupDispatchState();
+    const paramsFilterState = useParamsFilterState();
 
     useEffect(() => {
         if (!isParamFilterOpen) {
@@ -128,7 +129,8 @@ export const SetToolContainer = () => {
                 }
                 <div className='toolsSelectContainer'>
                     {
-                        items.map((item) => <ItemBlockForSetTool
+                            filterParams(items, paramsFilterState)
+                            .map((item) => <ItemBlockForSetTool
                             key={item.id}
                             toolParams={item}
                             compareArray={compareArray}

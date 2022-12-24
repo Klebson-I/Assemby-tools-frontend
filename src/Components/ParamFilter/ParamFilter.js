@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Autocomplete, Button, TextField} from "@mui/material";
 import './style.css'
 import {ParamFilterInput} from "../ParamFilterInput/ParamFilterInput";
+import {useParamsFilterStateDispatch} from "../../context/ParamsFilterContext/ParamsFilterContext";
+import {addToParamFilterState} from "../../context/ParamsFilterContext/actions";
 
 const PARAMS_TO_AVOID = ['match_code', 'id', 'name', 'type'];
 
@@ -41,6 +43,7 @@ export const ParamFilter = ({tool}) => {
     const [selectedParams, setSelectedParams] = useState([]);
     const [paramsToSelect, setParamsToSelect] = useState([]);
     const [autocompleteValue, setAutocompleteValue] = useState('');
+    const dispatchParamsFilterState = useParamsFilterStateDispatch();
 
     useEffect(() => {
         const params = createParamsTypesObject(tool);
@@ -56,6 +59,9 @@ export const ParamFilter = ({tool}) => {
             paramsToSelect[paramKey],
         ])
     };
+
+    const submitFilters = () =>
+        dispatchParamsFilterState(addToParamFilterState(selectedParams));
 
     return <>
         <div className='selectParamDiv'>
@@ -73,10 +79,12 @@ export const ParamFilter = ({tool}) => {
         </div>
         {
             selectedParams.length
-                ? selectedParams.map((param, index) => <ParamFilterInput param={param} key={index}/>)
+                ? selectedParams.map((param, index) =>
+                    <ParamFilterInput param={param} key={index} setSelectedParams={setSelectedParams}/>
+                )
                 : null
         }
-        <Button>
+        <Button sx={{marginLeft: '30px'}} variant='outlined' onClick={submitFilters}>
             Submit filters
         </Button>
     </>
