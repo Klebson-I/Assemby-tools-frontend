@@ -1,9 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import {createBoolInput, createNumberInput, createStringInput} from "./utils";
+import {createBoolInput, createNumberInput, createStringInput, isParamAlreadySelected, setStartValues} from "./utils";
 
-export const ParamFilterInput = ({param, setSelectedParams}) => {
+
+export const ParamFilterInput = ({param, setSelectedParams, paramsFilterState}) => {
     const [value, setValue] = useState('');
+
+    useEffect(() => {
+        if (isParamAlreadySelected(paramsFilterState, param)) {
+            setStartValues({paramsFilterState, param, setValue})
+        }
+    },[])
 
     useEffect(() => {
         setSelectedParams((prev) =>

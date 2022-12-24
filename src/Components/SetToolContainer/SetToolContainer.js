@@ -48,7 +48,7 @@ export const SetToolContainer = () => {
         const toolWithParam = items[0];
         dispatchGlobalPopupState(addToGlobalPopupState({
             isOpen: true,
-            component: <ParamFilter tool={toolWithParam}/>,
+            component: <ParamFilter tool={toolWithParam} setIsParamFilterOpen={setIsParamFilterOpen}/>,
             headingText: 'Select param to search'
         }))
     },[isParamFilterOpen])

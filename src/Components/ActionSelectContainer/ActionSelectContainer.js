@@ -7,7 +7,6 @@ import {FilterBlock} from "../FilterBlock/FilterBlock";
 import {OptionBar} from "../OptionBar/OptionBar";
 import {useItemState} from "../../context/ItemsContext/ItemContext";
 import {useFilterState} from "../../context/FilterContext/FilterContext";
-import {styleObject} from "./style";
 import {SetToolContainer} from "../SetToolContainer/SetToolContainer";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
 import cylindricalBore from "../../images/cylindrical_bore.png";
@@ -20,6 +19,8 @@ import cutRod from '../../images/cut rod .png';
 import rectangularPocket from '../../images/rec pocket.png';
 import noThroughBore from '../../images/bore no throught.png';
 import openPocket from '../../images/open pocket 1.png';
+import './style.css';
+import {ActionAssembly} from "../ActionAssembly/ActionAssembly";
 
 const getImageByActionName = (actionName) => {
     switch (actionName) {
@@ -42,6 +43,11 @@ export const ActionSelectContainer = () => {
     const [wordFilter, setWordFilter] = useState('');
     const itemState = useItemState();
     const filterState = useFilterState();
+    const [action, setAction] = useState('');
+
+    useEffect(() => {
+        setAction('');
+    },[option])
 
     useEffect(() => {
         if (!filterState.toolsFilter.length) {
@@ -49,7 +55,6 @@ export const ActionSelectContainer = () => {
             setTools(allItems);
         }
         else {
-            console.log(itemState);
             const filteredItems = Object?.values(itemState)
                 .flatMap((arr) => arr)
                 .filter((item) => filterState.toolsFilter.includes(item.type));
@@ -57,23 +62,29 @@ export const ActionSelectContainer = () => {
         }
     },[itemState, filterState])
 
-    return <Box sx={styleObject.box}>
+    return <Box className='box'>
         <OptionBar option={option} setOption={setOption}/>
         {
-            option!=='SET TOOL' && <SearchForAction setWordFilter={setWordFilter}/>
+            option!=='ASSEMBLY TOOL' && <SearchForAction setWordFilter={setWordFilter}/>
         }
         {option === 'TOOLS' && <FilterBlock/>}
-        {option === 'SET TOOL' && <SetToolContainer/>}
-        <Box sx={styleObject.boxForActions}>
+        {option === 'ASSEMBLY TOOL' && <SetToolContainer/>}
+        <Box className='boxForActions'>
             {
-                option === 'ACTIONS' && appConstants.arrayOfActions
+                option === 'ACTIONS' && action === '' &&
+                appConstants.arrayOfActions
                     .filter((action) => action.includes(wordFilter))
                     .map((action, index) => <ActionBlock
                         actionName={action}
                         image={getImageByActionName(action)}
                         key={index}
+                        setAction={setAction}
                     />
-                )
+                    )
+            }
+            {
+                option === 'ACTIONS' && action !== '' &&
+                    <ActionAssembly action={action} />
             }
             {
                 option === 'TOOLS' && tools

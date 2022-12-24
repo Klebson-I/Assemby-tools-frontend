@@ -109,6 +109,7 @@ const getProperUrlForItem = (step, setToolState) => {
         case 'DRILL': {
             return `drill`
         }
+        default: return '';
     }
 }
 
@@ -218,6 +219,7 @@ export const filterParams = (items, paramsFilterState) => {
             if (param.valueType === 'boolean') {
                 return Boolean(param.value) === Boolean(itemParamToFilter);
             }
+            return true;
         })
     })
     return filteredItems;

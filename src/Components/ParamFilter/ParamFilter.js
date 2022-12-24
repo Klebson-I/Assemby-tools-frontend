@@ -2,53 +2,30 @@ import React, {useEffect, useState} from 'react';
 import {Autocomplete, Button, TextField} from "@mui/material";
 import './style.css'
 import {ParamFilterInput} from "../ParamFilterInput/ParamFilterInput";
-import {useParamsFilterStateDispatch} from "../../context/ParamsFilterContext/ParamsFilterContext";
+import {
+    useParamsFilterState,
+    useParamsFilterStateDispatch
+} from "../../context/ParamsFilterContext/ParamsFilterContext";
 import {addToParamFilterState} from "../../context/ParamsFilterContext/actions";
+import {checkIsAllParamsHaveValues, createParamsTypesObject} from "./utils";
+import {addToInfoPopupState} from "../../context/InfoContext/actions";
+import {useInfoPopupDispatchState} from "../../context/InfoContext/InfoContext";
 
-const PARAMS_TO_AVOID = ['match_code', 'id', 'name', 'type'];
-
-const createParamsTypesObject = (tool) =>
-    Object.entries(tool)
-        .filter(([key,]) => !PARAMS_TO_AVOID.includes(key))
-        .reduce((acc, param) => {
-           const [key, value] = param;
-           if (value === 'false' || value === 'true') {
-               return {
-                   ...acc,
-                   [key]: {
-                       name: key,
-                       valueType: 'boolean',
-                   }
-               }
-           }
-           if (Number.isNaN(Number(value))) {
-               return {
-                   ...acc,
-                   [key]: {
-                       name: key,
-                       valueType: 'string',
-                   }
-               }
-           }
-           return {
-               ...acc,
-               [key]: {
-                   name: key,
-                   valueType: 'number',
-               }
-           }
-        },{})
-
-export const ParamFilter = ({tool}) => {
+export const ParamFilter = ({tool, setIsParamFilterOpen}) => {
     const [selectedParams, setSelectedParams] = useState([]);
     const [paramsToSelect, setParamsToSelect] = useState([]);
     const [autocompleteValue, setAutocompleteValue] = useState('');
     const dispatchParamsFilterState = useParamsFilterStateDispatch();
+    const infoPopupStateDispatch = useInfoPopupDispatchState();
+    const paramsFilterState = useParamsFilterState();
 
     useEffect(() => {
         const params = createParamsTypesObject(tool);
         setParamsToSelect(params);
+        setSelectedParams(paramsFilterState);
+        return () => setIsParamFilterOpen(false);
     }, []);
+
 
     const putParamToList = (paramKey) => {
         if (selectedParams.map(({name}) => name).includes(paramKey)) {
@@ -60,8 +37,22 @@ export const ParamFilter = ({tool}) => {
         ])
     };
 
-    const submitFilters = () =>
-        dispatchParamsFilterState(addToParamFilterState(selectedParams));
+    const submitFilters = () => {
+        if (checkIsAllParamsHaveValues(selectedParams)) {
+            dispatchParamsFilterState(addToParamFilterState(selectedParams));
+            return infoPopupStateDispatch(addToInfoPopupState({
+                isOpen: true,
+                text: 'Filters successfully applied',
+                severity: 'success',
+            }));
+        }
+        infoPopupStateDispatch(addToInfoPopupState({
+            isOpen: true,
+            text: 'Fill values of all field !',
+            severity: 'error',
+        }));
+    }
+
 
     return <>
         <div className='selectParamDiv'>
@@ -80,7 +71,12 @@ export const ParamFilter = ({tool}) => {
         {
             selectedParams.length
                 ? selectedParams.map((param, index) =>
-                    <ParamFilterInput param={param} key={index} setSelectedParams={setSelectedParams}/>
+                    <ParamFilterInput
+                        param={param}
+                        key={index}
+                        setSelectedParams={setSelectedParams}
+                        paramsFilterState = {paramsFilterState}
+                        />
                 )
                 : null
         }
@@ -88,4 +84,4 @@ export const ParamFilter = ({tool}) => {
             Submit filters
         </Button>
     </>
-};
+}

@@ -55,3 +55,25 @@ export const createNumberInput = ({param, value, setValue, removeParam}) => {
         </IconButton>
     </div>
 };
+
+export const setStartValues = ({paramsFilterState, param, setValue}) => {
+    const { value : paramValueFromState} = paramsFilterState.find(({name}) => name === param.name);
+    switch (param.valueType) {
+        case "string": {
+            return setValue(paramValueFromState || '');
+        }
+        case "number": {
+            return setValue({
+                min: paramValueFromState.min,
+                max: paramValueFromState.max,
+            })
+        }
+        case "boolean": {
+            return setValue(Boolean(paramValueFromState) || false);
+        }
+        default: break;
+    }
+};
+
+export const isParamAlreadySelected = (paramsFilterState, param) =>
+    paramsFilterState.map(({name}) => name).includes(param.name);

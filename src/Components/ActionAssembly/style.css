@@ -1,0 +1,43 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.divideContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.leftSide {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.rightSide {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actionImage {
+    max-width: 70%;
+    aspect-ratio: 1/1;
+}
+
+.imageSpan{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+}
+
+.rightSideHeader {
+    font-size: 32px;
+}

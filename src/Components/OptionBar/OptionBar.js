@@ -43,9 +43,9 @@ export const OptionBar = ({option, setOption}) => {
             <BuildIcon/>
             TOOLS
         </ToggleButton>
-        <ToggleButton value="SET TOOL" sx={styleObject.toggleButton} disabled={isDisable('SET TOOL')}>
+        <ToggleButton value="ASSEMBLY TOOL" sx={styleObject.toggleButton} disabled={isDisable('ASSEMBLY TOOL')}>
             <SettingsIcon/>
-            SET TOOL
+            ASSEMBLY TOOL
         </ToggleButton>
     </ToggleButtonGroup>
 }
