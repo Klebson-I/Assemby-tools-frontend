@@ -17,7 +17,11 @@ import {resetItemState} from "../../context/SetToolContext/actions";
 import {SetToolOperationButtons} from "../SetToolOperationButtons/SetToolOperationButtons";
 import './style.css';
 import {ParamFilter} from "../ParamFilter/ParamFilter";
-import {useParamsFilterState} from "../../context/ParamsFilterContext/ParamsFilterContext";
+import {
+    useParamsFilterState,
+    useParamsFilterStateDispatch
+} from "../../context/ParamsFilterContext/ParamsFilterContext";
+import {resetParamFilterState} from "../../context/ParamsFilterContext/actions";
 
 const stepStrChange = (str) =>
     str.toLowerCase()
@@ -35,6 +39,7 @@ export const SetToolContainer = () => {
     const [infoHeader, setInfoHeader] = useState("");
     const [isParamFilterOpen, setIsParamFilterOpen] = useState(false);
     const paramsFilterState = useParamsFilterState();
+    const dispatchParamsFilterState = useParamsFilterStateDispatch();
 
     useEffect(() => {
         if (!isParamFilterOpen) {
@@ -75,6 +80,7 @@ export const SetToolContainer = () => {
         if (optionalSteps.includes(stepName)) {
             setInfoHeader(getInfoHeaderText[stepName])
         }
+        dispatchParamsFilterState(resetParamFilterState());
         fetchForItems(stepName, setItems, setToolState);
     },[steps, action, stepIndex])
 
