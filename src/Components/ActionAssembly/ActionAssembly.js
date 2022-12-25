@@ -1,19 +1,41 @@
 import React, {useState} from "react";
 import './style.css';
-import {getArrayOfParametersForInputs, getImageForAction} from "./utils";
+import {
+    areProperParamsInStateFilled,
+    constructQueryStringForAction,
+    getArrayOfParametersForInputs,
+    getImageForAction
+} from "./utils";
 import {ActionParamInput} from "../ActionParamInput/ActionParamInput";
 import {Button} from "@mui/material";
+import {useInfoPopupDispatchState} from "../../context/InfoContext/InfoContext";
+import {addToInfoPopupState} from "../../context/InfoContext/actions";
+import {handleFetch} from "../../Hooks/useFetch";
 
 export const ActionAssembly = ({action}) => {
+    const infoPopupStateDispatch = useInfoPopupDispatchState();
     const [paramsValues, setParamsValues] = useState({
         D: 0,
         L: 0,
     });
 
-    const handleAutoAssembly = () => {
-        // validation is all params filled
-        // query string construct
-        // get assembly tool
+    const handleAutoAssembly = async () => {
+        if (!areProperParamsInStateFilled(paramsValues, action)) {
+            return infoPopupStateDispatch(addToInfoPopupState({
+                isOpen: true,
+                text: 'Fill all inputs',
+                severity: 'error',
+            }));
+        }
+        const queryString = constructQueryStringForAction(action, paramsValues);
+        const tool = await handleFetch(
+            'GET',
+            '',
+            queryString,
+            () => {},
+            () => {},
+            );
+        console.log(tool);
         //display in popup
         //in display we can save tool
     }
@@ -29,10 +51,11 @@ export const ActionAssembly = ({action}) => {
                 <h2 className='rightSideHeader'>Set parameters of action</h2>
                 {
                     getArrayOfParametersForInputs(action)
-                        .map((param) => <ActionParamInput
+                        .map((param, index) => <ActionParamInput
                             param={param}
                             value={paramsValues}
                             setValue={setParamsValues}
+                            key={index}
                         />)
                 }
             </div>
