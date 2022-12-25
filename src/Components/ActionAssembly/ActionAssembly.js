@@ -17,6 +17,8 @@ export const ActionAssembly = ({action}) => {
     const [paramsValues, setParamsValues] = useState({
         D: 0,
         L: 0,
+        L2: 0,
+        L3: 0,
     });
 
     const handleAutoAssembly = async () => {

@@ -1,5 +1,6 @@
 import throughHoleImage from '../../images/action-/through_hole.png';
 import noThroughHoleImage from '../../images/action-/no_through_hole.png';
+import cutBarImage from '../../images/action-/cut_bar.png';
 
 const PARAMS_FOR_ACTIONS = {
     'through hole': {
@@ -26,6 +27,28 @@ const PARAMS_FOR_ACTIONS = {
             description: 'Hole length',
         }
     },
+    'cut bar': {
+        D: {
+            symbol: 'D',
+            unit: 'mm',
+            description: 'Bar diameter',
+        },
+        L: {
+            symbol: 'L',
+            unit: 'mm',
+            description: 'Bar length',
+        },
+        L2: {
+            symbol: 'L2',
+            unit: 'mm',
+            description: 'Shorter cut bar length',
+        },
+        L3: {
+            symbol: 'L3',
+            unit: 'mm',
+            description: 'Longer cut bar length',
+        }
+    },
 };
 
 export const getImageForAction = (action) => {
@@ -35,6 +58,9 @@ export const getImageForAction = (action) => {
         }
         case 'no-through hole': {
             return noThroughHoleImage;
+        }
+        case 'cut bar': {
+            return cutBarImage;
         }
     }
 }
@@ -55,7 +81,7 @@ export const areProperParamsInStateFilled = (paramsValues, action) => {
 };
 
 const createQueryParams = (valuesArrayToQuery) =>
-    valuesArrayToQuery.reduce((acc, curr) => acc+= `/${curr}`,'');
+    valuesArrayToQuery.reduce((acc, curr) => acc +`/${curr}`,'');
 
 
 export const constructQueryStringForAction = (action, params) => {
