@@ -1,6 +1,6 @@
 export const appConstants = {
     arrayOfActions: [
-        'internal slot',
+        'V slot',
         'side slot',
         'cut bar',
         'surface planning',

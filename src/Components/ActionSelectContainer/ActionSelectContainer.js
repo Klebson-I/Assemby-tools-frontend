@@ -11,7 +11,7 @@ import {SetToolContainer} from "../SetToolContainer/SetToolContainer";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
 import cylindricalBore from "../../images/cylindrical_bore.png";
 import externalGroove from "../../images/external_groove.png";
-import internalGroove from "../../images/internal_groove.png";
+import vSlotImage from "../../images/v_slot.png";
 import surfacePlanning from '../../images/surface_planning.png';
 import standard from '../../images/standard.png';
 import cutPipe from '../../images/cut pipe.png'
@@ -19,13 +19,15 @@ import cutRod from '../../images/cut rod .png';
 import rectangularPocket from '../../images/rec pocket.png';
 import noThroughBore from '../../images/bore no throught.png';
 import openPocket from '../../images/open pocket 1.png';
+import sideSlotImage from '../../images/side_slot.png';
+import facePlanningImage from '../../images/face_planning.png';
 import './style.css';
 import {ActionAssembly} from "../ActionAssembly/ActionAssembly";
 
 const getImageByActionName = (actionName) => {
     switch (actionName) {
-        case 'internal slot': return internalGroove;
-        case 'side slot': return externalGroove;
+        case 'V slot': return vSlotImage;
+        case 'side slot': return sideSlotImage;
         case 'surface planning': return surfacePlanning;
         case 'through hole': return cylindricalBore;
         case 'no-through hole': return noThroughBore;
@@ -33,6 +35,8 @@ const getImageByActionName = (actionName) => {
         case 'cut bar': return cutRod;
         case 'pocket': return rectangularPocket;
         case 'open pocket': return openPocket;
+        case 'external groove': return externalGroove;
+        case 'face planning': return facePlanningImage;
         default: return standard;
     }
 }
@@ -88,7 +92,7 @@ export const ActionSelectContainer = () => {
             }
             {
                 option === 'TOOLS' && tools
-                    .filter((tool) => tool.name.includes(wordFilter))
+                    .filter((tool) => tool.name?.includes(wordFilter))
                     .map((tool, index) => <ItemBlock
                     key={index}
                     toolParams={tool}

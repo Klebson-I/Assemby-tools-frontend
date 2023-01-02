@@ -19,6 +19,8 @@ import W from '../images/iso-pictures/CUTTING_INSERT/W.png';
 import C_D_E_M_V from '../images/iso-pictures/CUTTING_INSERT/C_D_E_M_V.png'
 import turningHolderPic1 from '../images/iso-pictures/TURNING_HOLDER/1.png';
 import turningHolderPic2 from '../images/iso-pictures/TURNING_HOLDER/2.png';
+import ISO50 from '../images/iso-pictures/ASSEMBLY_ITEM/ISO50.png';
+import COLLET from '../images/iso-pictures/ASSEMBLY_ITEM/COLLET.png';
 import {ImageSlider} from "../Components/ImageSlider/ImageSlider";
 import {stylesObjectForGlobalPopup} from "../App";
 import {useGlobalPopupState} from "../context/GlobalPopupContext/GlobalPopupContext";
@@ -87,6 +89,8 @@ const getUrlPrefixByToolType = (type) => {
         case FILTER_TYPES.torqueWrench: return 'assemblyMillItem';
         case FILTER_TYPES.cassette: return 'assemblyMillItem';
         case FILTER_TYPES.drill: return 'drill';
+        case FILTER_TYPES.iso50: return 'assemblyMillItem';
+        case FILTER_TYPES.collet: return 'assemblyMillItem';
         default: break;
     }
 };
@@ -115,28 +119,25 @@ const getParamsImagesForCuttingInsert = ({SC}) => {
 
 const getParamsImagesForTurningHolder = () => [turningHolderPic1, turningHolderPic2];
 
-const getParamsImagesForAssemblyItem = () => [turningHolderPic1];
-
 const getImageFunctionObject = {
     'CUTTING_INSERT':(tool) => getParamsImagesForCuttingInsert(tool),
     'TURNING_HOLDER': getParamsImagesForTurningHolder,
-    'ASSEMBLY_ITEM': getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.monoMillTool}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.endMillHolder}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.discMillHolder}`]: getParamsImagesForAssemblyItem,
     [`${FILTER_TYPES.cuttingInsertForMill}`]:(tool) => getParamsImagesForCuttingInsert(tool),
     [`${FILTER_TYPES.cuttingInsertMillForCutAndSlot}`]:(tool) => getParamsImagesForCuttingInsert(tool),
-    [`${FILTER_TYPES.bit}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.key}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.torqueWrench}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.insertScrewMill}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.wedgeScrew}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.clampingWedgeMill}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.cassette}`]: getParamsImagesForAssemblyItem,
-    [`${FILTER_TYPES.drill}`]: getParamsImagesForAssemblyItem,
+    'ISO50':() => [ISO50],
+    'COLLET':() => [COLLET],
 };
 
 const getParamsImages = (tool) => getImageFunctionObject[tool.type](tool);
+
+const shouldDisplaySlider = ({type}) => [
+    FILTER_TYPES.cuttingInsert,
+    FILTER_TYPES.turningHolder,
+    FILTER_TYPES.cuttingInsertForMill,
+    FILTER_TYPES.cuttingInsertMillForCutAndSlot,
+    FILTER_TYPES.iso50,
+    FILTER_TYPES.collet,
+].includes(type);
 
 export const SingleToolView = () => {
     const [tool, setTool] = useState({});
@@ -189,7 +190,9 @@ export const SingleToolView = () => {
                     <div style={styleObject.leftSide}>
                         <img src={getProperImage(type)} style={styleObject.image} alt='icon'/>
                         <h3>{tool.name}</h3>
-                        <ImageSlider images={getParamsImages(tool)} />
+                        {
+                            shouldDisplaySlider(tool) && <ImageSlider images={getParamsImages(tool)} />
+                        }
                     </div>
                     <Paper elevation={8} sx={styleObject.scrollContainer}>
                         <ToolParamsTable tool={tool} params={params}/>

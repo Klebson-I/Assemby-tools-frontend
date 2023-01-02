@@ -11,24 +11,7 @@ import {stylesObjectForGlobalPopup} from "../App";
 import {useInfoPopupDispatchState, useInfoPopupState} from "../context/InfoContext/InfoContext";
 import {addToInfoPopupState} from "../context/InfoContext/actions";
 import {InfoPopup} from "../Components/InfoPopup/InfoPopup";
-
-const styleObject = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        position: 'relative',
-        overflowX: 'hidden'
-    },
-    backArrowDiv: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    }
-}
+import './style.css';
 
 export const UserAccount = () => {
     const [assemblyTools, setAssemblyTools] = useState([]);
@@ -60,7 +43,7 @@ export const UserAccount = () => {
 
     const goBack = () => navigate('/app');
 
-    return <div style={styleObject.container}>
+    return <div className='userAccountContainer'>
         {
             globalPopupState.isOpen && <GlobalPopup
                 component={globalPopupState.component}
@@ -70,7 +53,7 @@ export const UserAccount = () => {
         {globalPopupState.isOpen && <div style={stylesObjectForGlobalPopup.globalCurtain}/>}
         {infoPopupState.isOpen && <InfoPopup text={infoPopupState.text} severity={infoPopupState.severity} />}
         <AppHeader/>
-        <div style={styleObject.backArrowDiv}>
+        <div className='backArrowDiv'>
             <IconButton onClick={goBack}>
                 <ArrowBackIcon fontSize='large'/>
             </IconButton>

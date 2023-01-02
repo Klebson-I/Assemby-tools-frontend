@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Paper, TextField} from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import {Paper} from "@mui/material";
 import {useSetToolState} from "../../context/SetToolContext/SetToolContext";
 import {ItemBlock} from "../ItemBlock/ItemBlock";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
@@ -10,33 +8,8 @@ import {handleFetch} from "../../Hooks/useFetch";
 import {useInfoPopupDispatchState} from "../../context/InfoContext/InfoContext";
 import {addToInfoPopupState} from "../../context/InfoContext/actions";
 import {OPTIONAL_ID} from "../SetToolContainer/utils";
-
-const styleObject = {
-    selectedItemsContainer: {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-    },
-    buttonsDiv: {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        margin: '20px 0'
-    },
-    button: {
-        fontSize: '22px',
-    },
-    textfieldDiv: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-    },
-    textfield: {
-        width: '50%'
-    },
-}
+import {SaveToolField} from "../SaveToolField/SaveToolField";
+import './style.css';
 
 export const SelectionComplete = () => {
     const setToolState = useSetToolState();
@@ -93,42 +66,17 @@ export const SelectionComplete = () => {
 
 
     return <Paper elevation={0}>
-        <div style={styleObject.selectedItemsContainer}>
+        <div className='selectedItemsContainer'>
             {
                 getItemsObjectsFromState().map((item, index) => <ItemBlock key={index} toolParams={item} navigationDisable={true}/>)
             }
         </div>
-        <div style={styleObject.textfieldDiv}>
-            <TextField
-                label={isNameValid ? 'Tool name' : "Set tool name"}
-                margin='normal'
-                color='primary'
-                error={!isNameValid}
-                sx={styleObject.textfield}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-        </div>
-        <div style={styleObject.buttonsDiv}>
-            <Button
-                variant='outlined'
-                color ='primary'
-                onClick={goBack}
-                sx={styleObject.button}
-                startIcon={<ArrowBackIcon fontSize='large'/>}
-            >
-                GO BACK
-            </Button>
-            <Button
-                onClick={saveTool}
-                variant='outlined'
-                color='success'
-                sx={styleObject.button}
-                disabled={!isNameValid}
-                startIcon={<SaveOutlinedIcon fontSize='large'/>}
-            >
-                SAVE TOOL
-            </Button>
-        </div>
+        <SaveToolField
+            isNameValid={isNameValid}
+            setName={setName}
+            saveTool={saveTool}
+            goBack={goBack}
+            name={name}
+        />
     </Paper>
 }

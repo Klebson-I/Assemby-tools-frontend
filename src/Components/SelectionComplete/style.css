@@ -1,0 +1,18 @@
+
+.selectedItemsContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.buttonsDiv {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px 0;
+}
+
+.button{
+    fontSize: 22px;
+}

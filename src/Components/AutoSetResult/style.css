@@ -1,0 +1,23 @@
+.setResultDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.singleToolContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.toolItems{
+    width: 90%;
+    display: flex;
+}
+.actionName {
+    font-weight: 700;
+    font-size: 25px;
+}

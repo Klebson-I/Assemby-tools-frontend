@@ -1,6 +1,10 @@
 import throughHoleImage from '../../images/action-/through_hole.png';
 import noThroughHoleImage from '../../images/action-/no_through_hole.png';
 import cutBarImage from '../../images/action-/cut_bar.png';
+import sideSlotImage from '../../images/action-/side_slot.png';
+import surfacePlanningImage from '../../images/action-/surface_planning.png';
+import pocketImage from '../../images/action-/pocket.png';
+import openPocketImage from '../../images/action-/open_pocket.png';
 
 const PARAMS_FOR_ACTIONS = {
     'through hole': {
@@ -13,7 +17,12 @@ const PARAMS_FOR_ACTIONS = {
             symbol: 'L',
             unit: 'mm',
             description: 'Hole length',
-        }
+        },
+        IT: {
+          symbol: 'IT',
+          unit: '--',
+          description: 'Class of hole'
+        },
     },
     'no-through hole': {
         D: {
@@ -25,6 +34,16 @@ const PARAMS_FOR_ACTIONS = {
             symbol: 'L',
             unit: 'mm',
             description: 'Hole length',
+        },
+        IT: {
+            symbol: 'IT',
+            unit: '--',
+            description: 'Class of hole',
+        },
+        BOTTOM: {
+            symbol: 'BOTTOM',
+            unit: '--',
+            description: 'Hole bottom shape',
         }
     },
     'cut bar': {
@@ -33,21 +52,84 @@ const PARAMS_FOR_ACTIONS = {
             unit: 'mm',
             description: 'Bar diameter',
         },
+    },
+    'side slot': {
         L: {
             symbol: 'L',
             unit: 'mm',
-            description: 'Bar length',
+            description: 'Slot length',
         },
         L2: {
             symbol: 'L2',
             unit: 'mm',
-            description: 'Shorter cut bar length',
+            description: 'Slot depth',
         },
-        L3: {
-            symbol: 'L3',
+        H: {
+            symbol: 'H',
             unit: 'mm',
-            description: 'Longer cut bar length',
+            description: 'Slot height',
         }
+    },
+    'surface planning': {
+        L: {
+            symbol: 'L',
+            unit: 'mm',
+            description: 'Surface length',
+        },
+        L2: {
+            symbol: 'L2',
+            unit: 'mm',
+            description: 'Surface width',
+        },
+        H: {
+            symbol: 'H',
+            unit: 'mm',
+            description: 'Deep of cut',
+        },
+    },
+    'pocket': {
+        L: {
+            symbol: 'L',
+            unit: 'mm',
+            description: 'Pocket length',
+        },
+        L2: {
+            symbol: 'L2',
+            unit: 'mm',
+            description: 'Pocket width',
+        },
+        AP: {
+            symbol: 'AP',
+            unit: 'mm',
+            description: 'Deep of cut',
+        },
+        R: {
+            symbol: 'R',
+            unit: 'mm',
+            description: 'Corner radius',
+        },
+    },
+    'open pocket': {
+        L: {
+            symbol: 'L',
+            unit: 'mm',
+            description: 'Pocket length',
+        },
+        L2: {
+            symbol: 'L2',
+            unit: 'mm',
+            description: 'Pocket width',
+        },
+        AP: {
+            symbol: 'AP',
+            unit: 'mm',
+            description: 'Deep of cut',
+        },
+        R: {
+            symbol: 'R',
+            unit: 'mm',
+            description: 'Corner radius',
+        },
     },
 };
 
@@ -62,6 +144,19 @@ export const getImageForAction = (action) => {
         case 'cut bar': {
             return cutBarImage;
         }
+        case 'side slot': {
+            return sideSlotImage;
+        }
+        case 'surface planning': {
+            return surfacePlanningImage;
+        }
+        case 'pocket': {
+            return pocketImage;
+        }
+        case 'open pocket': {
+            return openPocketImage;
+        }
+        default: break;
     }
 }
 

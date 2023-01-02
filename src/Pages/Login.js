@@ -9,9 +9,8 @@ import {addToUserState} from "../context/UserContext/actions";
 
 const styleObject = {
     menu: {
-        width: '50%',
-        display: 'flex',
-        alignItems: 'center',
+        width: '100%',
+        transform: 'translateX(25%) translateY(25%)',
     },
     menuItem: {
         fontSize: '60px',
@@ -31,6 +30,10 @@ const styleObject = {
     link: {
         color: 'inherit',
         textDecoration: 'none',
+    },
+    container: {
+        width: '100%',
+        transform: 'translateX(25%) translateY(50%)',
     }
 }
 
@@ -56,7 +59,7 @@ export const Login = () => {
         setIsAdminSelect(false);
     };
 
-    return <>
+    return <div style={styleObject.container}>
         {
             isAdminSelect ?
                 <LoginForm handleGoBackClick={handleGoBackClick}/>
@@ -72,5 +75,5 @@ export const Login = () => {
                         </MenuItem>
                 </Menu>
         }
-    </>
+    </div>
 }

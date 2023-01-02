@@ -1,0 +1,28 @@
+.selectedItemsContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.buttonsDiv {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px 0;
+}
+
+.button {
+    font-size: 22px;
+}
+
+.textfieldDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.textfield {
+    width: 50%;
+}
