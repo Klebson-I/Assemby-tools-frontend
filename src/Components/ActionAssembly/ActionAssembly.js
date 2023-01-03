@@ -13,7 +13,6 @@ import {addToInfoPopupState} from "../../context/InfoContext/actions";
 import {handleFetch} from "../../Hooks/useFetch";
 import {useGlobalPopupDispatchState} from "../../context/GlobalPopupContext/GlobalPopupContext";
 import {addToGlobalPopupState} from "../../context/GlobalPopupContext/actions";
-import {ParamFilter} from "../ParamFilter/ParamFilter";
 import {AutoSetResult} from "../AutoSetResult/AutoSetResult";
 
 export const ActionAssembly = ({action}) => {
@@ -29,6 +28,9 @@ export const ActionAssembly = ({action}) => {
         AP: 0,
         IT: 'IT6',
         BOTTOM: 'V',
+        δ: '45 deg',
+        Ls: '16',
+        Hs: '4',
     });
 
     const handleAutoAssembly = async () => {

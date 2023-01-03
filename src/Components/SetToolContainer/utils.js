@@ -10,11 +10,12 @@ export const ACTION_SELECT_ARRAYS = {
     END_MILL_HOLDER: ['END_MILL_HOLDER', 'INSERT_FOR_MILL', 'INSERT_SCREW_MILL', 'BIT', 'TORQUE_WRENCH'],
     DISC_CUTTER_HOLDER: ['DISC_CUTTER_HOLDER', 'INSERT_FOR_SLOT_CUT',
         'CASSETTE', 'INSERT_SCREW_MILL', 'CLAMPING_WEDGE_MILL', 'WEDGE_SCREW', 'BIT', 'KEY', 'TORQUE_WRENCH'],
+    ANGLE_CUTTER: ['ANGLE_CUTTER', 'ISO50', 'COLLET']
 }
 
 export const ACTIONS = ['MILLING', 'TURNING', 'DRILLING'];
 
-export const arrayOfMillTypes =  ['DISC_CUTTER_HOLDER', 'END_MILL_HOLDER', 'END_MILL_MONO_HOLDER'];
+export const arrayOfMillTypes =  ['DISC_CUTTER_HOLDER', 'END_MILL_HOLDER', 'END_MILL_MONO_HOLDER', 'ANGLE_CUTTER'];
 
 export const optionalSteps = ['TORQUE_WRENCH', 'ISO50', 'COLLET']
 
@@ -38,7 +39,9 @@ const checkIsMillingAssemblyComplete = (setToolState) => {
     if (!steps) {
         return false;
     }
-    return steps.every((step) => setToolState[step]?.id)
+    return steps.every((step) => {
+        return setToolState[step]?.id;
+    })
 };
 
 export const getInfoHeaderText = {
@@ -69,7 +72,10 @@ const getProperUrlForItem = (step, setToolState) => {
             return 'millHolder/allMills/END_MILL_HOLDER';
         }
         case 'END_MILL_MONO_HOLDER': {
-            return 'monoMillTool';
+            return 'monoMillTool/END_MILL_MONO_HOLDER';
+        }
+        case 'ANGLE_CUTTER': {
+            return 'monoMillTool/ANGLE_CUTTER';
         }
         case 'INSERT_FOR_SLOT_CUT': {
             const {shape, size} = getShapeAndSizeForCuttingInsertMilling(setToolState);
@@ -175,6 +181,12 @@ export const ASSEMBLY_TOOL_OBJECT = {
     END_MILL_MONO_HOLDER: {
         action: 'MILLING',
         END_MILL_MONO_HOLDER: {},
+        COLLET: {},
+        ISO50: {},
+    },
+    ANGLE_CUTTER: {
+        action: 'MILLING',
+        ANGLE_CUTTER: {},
         COLLET: {},
         ISO50: {},
     },

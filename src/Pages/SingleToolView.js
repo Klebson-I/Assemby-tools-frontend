@@ -21,6 +21,7 @@ import turningHolderPic1 from '../images/iso-pictures/TURNING_HOLDER/1.png';
 import turningHolderPic2 from '../images/iso-pictures/TURNING_HOLDER/2.png';
 import ISO50 from '../images/iso-pictures/ASSEMBLY_ITEM/ISO50.png';
 import COLLET from '../images/iso-pictures/ASSEMBLY_ITEM/COLLET.png';
+import ANGLE_CUTTER from '../images/iso-pictures/END_MILL/angle_cutter.png';
 import {ImageSlider} from "../Components/ImageSlider/ImageSlider";
 import {stylesObjectForGlobalPopup} from "../App";
 import {useGlobalPopupState} from "../context/GlobalPopupContext/GlobalPopupContext";
@@ -91,6 +92,7 @@ const getUrlPrefixByToolType = (type) => {
         case FILTER_TYPES.drill: return 'drill';
         case FILTER_TYPES.iso50: return 'assemblyMillItem';
         case FILTER_TYPES.collet: return 'assemblyMillItem';
+        case FILTER_TYPES.angleCutter: return 'monoMillTool';
         default: break;
     }
 };
@@ -126,6 +128,7 @@ const getImageFunctionObject = {
     [`${FILTER_TYPES.cuttingInsertMillForCutAndSlot}`]:(tool) => getParamsImagesForCuttingInsert(tool),
     'ISO50':() => [ISO50],
     'COLLET':() => [COLLET],
+    'ANGLE_CUTTER': () => [ANGLE_CUTTER],
 };
 
 const getParamsImages = (tool) => getImageFunctionObject[tool.type](tool);
@@ -137,6 +140,7 @@ const shouldDisplaySlider = ({type}) => [
     FILTER_TYPES.cuttingInsertMillForCutAndSlot,
     FILTER_TYPES.iso50,
     FILTER_TYPES.collet,
+    FILTER_TYPES.angleCutter,
 ].includes(type);
 
 export const SingleToolView = () => {

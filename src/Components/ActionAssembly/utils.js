@@ -5,6 +5,7 @@ import sideSlotImage from '../../images/action-/side_slot.png';
 import surfacePlanningImage from '../../images/action-/surface_planning.png';
 import pocketImage from '../../images/action-/pocket.png';
 import openPocketImage from '../../images/action-/open_pocket.png';
+import vSlotImage from '../../images/action-/v_slot.png';
 
 const PARAMS_FOR_ACTIONS = {
     'through hole': {
@@ -131,6 +132,23 @@ const PARAMS_FOR_ACTIONS = {
             description: 'Corner radius',
         },
     },
+    'V slot': {
+        Ls: {
+            symbol: 'Ls',
+            unit: 'mm',
+            description: 'Slot width',
+        },
+        Hs: {
+            symbol: 'Hs',
+            unit: 'mm',
+            description: 'Deep of cut',
+        },
+        δ: {
+            symbol: 'δ',
+            unit: '---',
+            description: 'Angle of slot',
+        }
+    },
 };
 
 export const getImageForAction = (action) => {
@@ -155,6 +173,9 @@ export const getImageForAction = (action) => {
         }
         case 'open pocket': {
             return openPocketImage;
+        }
+        case 'V slot': {
+            return vSlotImage;
         }
         default: break;
     }

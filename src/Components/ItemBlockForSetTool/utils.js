@@ -16,6 +16,7 @@ import bitImage from '../../images/bit.jpg';
 import colletImage from '../../images/collet.jpg';
 import iso50Image from '../../images/iso50.jpg';
 import drillImage from '../../images/drill.png';
+import angleCutterImage from '../../images/angle_cutter.png';
 import {FILTER_TYPES} from "../../constants";
 
 export const getProperImage = (type) => {
@@ -38,9 +39,12 @@ export const getProperImage = (type) => {
         case FILTER_TYPES.iso50: return iso50Image;
         case FILTER_TYPES.collet: return colletImage;
         case FILTER_TYPES.drill: return drillImage;
+        case FILTER_TYPES.angleCutter: return angleCutterImage;
         default: break;
     }
 }
 
-export const isSomeToolAlreadySelected = (setToolState, toolParams) => setToolState[toolParams.type] !== {} &&
-    setToolState[toolParams.type]?.id === toolParams.id;
+export const isSomeToolAlreadySelected = (setToolState, toolParams) => {
+    return setToolState[toolParams.type] !== {} &&
+        setToolState[toolParams.type]?.id === toolParams.id;
+}

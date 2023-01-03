@@ -19,4 +19,5 @@ export const FILTER_TYPES = {
     iso50: 'ISO50',
     collet: 'COLLET',
     drill: 'DRILL',
+    angleCutter: 'ANGLE_CUTTER',
 }

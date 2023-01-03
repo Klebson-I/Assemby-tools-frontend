@@ -7,6 +7,7 @@ const MILL_OPTIONS = {
     DISC_CUTTER_HOLDER: 'DISC_CUTTER_HOLDER',
     END_MILL_HOLDER: 'END_MILL_HOLDER',
     END_MILL_MONO_HOLDER: 'END_MILL_MONO_HOLDER',
+    ANGLE_CUTTER: 'ANGLE_CUTTER',
 };
 
 const getClassByAction = (action) => {
@@ -22,6 +23,7 @@ const getClassByMillType = (action) => {
         case MILL_OPTIONS.END_MILL_MONO_HOLDER : return 'base monoEndMill';
         case MILL_OPTIONS.END_MILL_HOLDER: return 'base endMill';
         case MILL_OPTIONS.DISC_CUTTER_HOLDER: return 'base discMill';
+        case MILL_OPTIONS.ANGLE_CUTTER: return 'base angleCutter';
     }
 };
 

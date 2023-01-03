@@ -64,6 +64,14 @@ export const SetToolContainer = () => {
     },[action])
 
     const handleStepChange = (index) => {
+        if (!setToolState[ACTION_SELECT_ARRAYS[action][stepIndex]].id &&
+            ACTION_SELECT_ARRAYS[action][stepIndex] === 'END_MILL_MONO_HOLDER' &&
+            setToolState['ANGLE_CUTTER']?.id
+        ) {
+            setStepIndex(index);
+            setCompareArray([]);
+            return;
+        }
         if (!setToolState[ACTION_SELECT_ARRAYS[action][stepIndex]].id && index > stepIndex) {
             return;
         }
