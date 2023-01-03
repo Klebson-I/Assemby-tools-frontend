@@ -89,6 +89,12 @@ export const Menu = () => {
                         </ListItemIcon>
                         <ListItemText primary="Mono end mills" />
                     </ListItemButton>
+                    <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.angleCutter)} selected={isFilterActive(FILTER_TYPES.angleCutter)}>
+                        <ListItemIcon>
+                            <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary="Angle cutters" />
+                    </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilterClick(FILTER_TYPES.cuttingInsertForMill)} selected={isFilterActive(FILTER_TYPES.cuttingInsertForMill)}>
                         <ListItemIcon>
                             <StarBorder />

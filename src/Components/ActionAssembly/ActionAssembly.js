@@ -28,7 +28,7 @@ export const ActionAssembly = ({action}) => {
         AP: 0,
         IT: 'IT6',
         BOTTOM: 'V',
-        δ: '45 deg',
+        δ: '45deg',
         Ls: '16',
         Hs: '4',
     });
