@@ -42,7 +42,6 @@ export const ActionAssembly = ({action}) => {
             }));
         }
         const queryString = constructQueryStringForAction(action, paramsValues);
-        console.log(queryString);
         const tool = await handleFetch(
             'GET',
             '',
@@ -51,7 +50,6 @@ export const ActionAssembly = ({action}) => {
             () => {},
             );
         if (tool?.msg) {
-            console.log(tool.msg)
             return infoPopupStateDispatch(addToInfoPopupState({
                 isOpen: true,
                 text: tool.msg,

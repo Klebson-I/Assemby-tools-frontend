@@ -23,9 +23,6 @@ export const AutoSetResult = ({tool}) => {
     const getNameByIndex = (name, index) => `${name}  --${index+1}--`;
 
     const saveTool = async () => {
-        const arr = Object.values(tool)
-            .map((single) => setProperSaveObjectForTool(single, name));
-        console.log(arr);
         const arrayOfPromises = Object.values(tool)
             .map((singleTool, index) => handleFetch(
                 'POST',
@@ -63,7 +60,7 @@ export const AutoSetResult = ({tool}) => {
     return <div className='setResultDiv'>
         {
             Object.entries(tool)
-                .map(([name, toolObject], index) => <div className='singleToolContainer'>
+                .map(([name, toolObject], index) => <div className='singleToolContainer' key={index}>
                     <span className='actionName'>{name}</span>
                     <div className='toolItems'>
                         {

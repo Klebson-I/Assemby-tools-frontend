@@ -15,8 +15,9 @@ import fileSaver from 'file-saver';
 const styleObject = {
     toolContainer: {
         display: 'flex',
-        margin: '50px 0',
+        margin: '50px 10px',
         width: '95%',
+        minWidth: '50rem',
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
