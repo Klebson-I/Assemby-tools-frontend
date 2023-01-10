@@ -3,7 +3,7 @@ import {AppHeader} from "../Components/AppHeader/AppHeader";
 import {handleFetch} from "../Hooks/useFetch";
 import {AssemblyToolItem} from "../Components/AssemblyToolItem/AssemblyToolItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {GlobalPopup} from "../Components/GlobalPopup/GlobalPopup";
 import {useGlobalPopupState} from "../context/GlobalPopupContext/GlobalPopupContext";
@@ -12,6 +12,8 @@ import {useInfoPopupDispatchState, useInfoPopupState} from "../context/InfoConte
 import {addToInfoPopupState} from "../context/InfoContext/actions";
 import {InfoPopup} from "../Components/InfoPopup/InfoPopup";
 import './style.css';
+import fileSaver from 'file-saver';
+import {url} from "../constants";
 
 export const UserAccount = () => {
     const [assemblyTools, setAssemblyTools] = useState([]);
@@ -43,6 +45,12 @@ export const UserAccount = () => {
 
     const goBack = () => navigate('/app');
 
+    const getCsv = async () => {
+        const res = await fetch(`${url}csv`);
+        const blob = await res.blob();
+        fileSaver.saveAs(blob, 'params.csv');
+    };
+
     return <div className='userAccountContainer'>
         {
             globalPopupState.isOpen && <GlobalPopup
@@ -58,6 +66,16 @@ export const UserAccount = () => {
                 <ArrowBackIcon fontSize='large'/>
             </IconButton>
         </div>
+        <Button onClick={getCsv}
+            variant='contained'
+            sx={{
+                fontSize: '25px',
+                width: '100%',
+                marginTop: '10px',
+            }}
+        >
+            Download csv file with params descriptions
+        </Button>
         <div>
             {
                 assemblyTools.map((assemblyTool) => <AssemblyToolItem

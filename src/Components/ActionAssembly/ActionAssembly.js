@@ -24,13 +24,15 @@ export const ActionAssembly = ({action}) => {
         L2: 0,
         L3: 0,
         H: 0,
-        R: 0,
+        R1: 0,
+        R2: 0,
         AP: 0,
         IT: 'IT6',
         BOTTOM: 'V',
         δ: '45deg',
         Ls: '16',
         Hs: '4',
+        HAND: 'L',
     });
 
     const handleAutoAssembly = async () => {
@@ -42,6 +44,7 @@ export const ActionAssembly = ({action}) => {
             }));
         }
         const queryString = constructQueryStringForAction(action, paramsValues);
+        console.log(queryString);
         const tool = await handleFetch(
             'GET',
             '',

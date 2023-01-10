@@ -26,7 +26,7 @@ root.render(
                           <SetToolContext>
                               <InfoPopupContext>
                                   <Routes>
-                                      <Route path={'/'} element={<Navigate to='/login'/>}/>
+                                      <Route path={'/'} element={<Navigate to='/app'/>}/>
                                       <Route path='/login' element={<Login/>}/>
                                       <Route path='/app' element={<App/>}/>
                                       <Route path='/app/singletool/:type/:id' element={<SingleToolView/>}/>

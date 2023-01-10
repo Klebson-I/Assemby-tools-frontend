@@ -2,12 +2,13 @@ import React from "react";
 import {Input, MenuItem, Select} from "@mui/material";
 import './style.css';
 
-const SELECT_PARAMS_SYMBOLS = ['IT', 'BOTTOM', 'Hs', 'Ls', 'δ'];
+const SELECT_PARAMS_SYMBOLS = ['IT', 'BOTTOM', 'Hs', 'Ls', 'δ', 'HAND'];
 const BOTTOM_DOMAIN = ['FLAT', 'V'];
 const IT_DOMAIN = ['IT6', 'IT7', 'IT8', 'IT9', 'IT10', 'IT11'];
 const LS_DOMAIN = [16, 20, 25, 32];
 const HS_DOMAIN = [4, 5, 6.3, 8, 10, 5.6, 7.1, 9, 11.2, 12.5];
 const DELTA_DOMAIN = ['45deg', '50deg', '55deg', '60deg'];
+const HAND_DOMAIN = ['L', 'R'];
 
 const getMenuItemsForSelect = (param) => {
     switch (param.symbol) {
@@ -16,6 +17,8 @@ const getMenuItemsForSelect = (param) => {
         case 'Ls': return LS_DOMAIN.map((ls, index) => <MenuItem key={index} value={ls}>{ls}</MenuItem>);
         case 'Hs': return HS_DOMAIN.map((hs, index) => <MenuItem key={index} value={hs}>{hs}</MenuItem>);
         case 'δ': return DELTA_DOMAIN.map((delta, index) => <MenuItem key={index} value={delta}>{delta}</MenuItem>);
+        case 'HAND': return HAND_DOMAIN.map((hand, index) => <MenuItem key={index} value={hand}>{hand}</MenuItem>);
+        default: break;
     };
 }
 
@@ -44,7 +47,7 @@ export const ActionParamInput = ({value, setValue, param}) => {
                     </Select>
             }
             {
-                !['IT', 'BOTTOM', 'δ'].includes(param.symbol) && <span>{param.unit}</span>
+                !['IT', 'BOTTOM', 'δ', 'HAND'].includes(param.symbol) && <span>{param.unit}</span>
             }
         </div>
     </div>

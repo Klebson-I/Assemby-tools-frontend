@@ -6,6 +6,8 @@ import surfacePlanningImage from '../../images/action-/surface_planning.png';
 import pocketImage from '../../images/action-/pocket.png';
 import openPocketImage from '../../images/action-/open_pocket.png';
 import vSlotImage from '../../images/action-/v_slot.png';
+import facePlanningImage from '../../images/action-/face_planning.png';
+import externalGrooveImage from '../../images/action-/external_groove.png';
 
 const PARAMS_FOR_ACTIONS = {
     'through hole': {
@@ -104,10 +106,15 @@ const PARAMS_FOR_ACTIONS = {
             unit: 'mm',
             description: 'Deep of cut',
         },
-        R: {
-            symbol: 'R',
+        R1: {
+            symbol: 'R1',
             unit: 'mm',
-            description: 'Corner radius',
+            description: 'Max corner radius',
+        },
+        R2: {
+            symbol: 'R2',
+            unit: 'mm',
+            description: 'Max corner radius bottom',
         },
     },
     'open pocket': {
@@ -126,10 +133,15 @@ const PARAMS_FOR_ACTIONS = {
             unit: 'mm',
             description: 'Deep of cut',
         },
-        R: {
-            symbol: 'R',
+        R1: {
+            symbol: 'R1',
             unit: 'mm',
-            description: 'Corner radius',
+            description: 'Max corner radius',
+        },
+        R2: {
+            symbol: 'R2',
+            unit: 'mm',
+            description: 'Max corner radius bottom',
         },
     },
     'V slot': {
@@ -141,13 +153,47 @@ const PARAMS_FOR_ACTIONS = {
         Hs: {
             symbol: 'Hs',
             unit: 'mm',
-            description: 'Deep of cut',
+            description: 'Slot deep',
         },
         δ: {
             symbol: 'δ',
             unit: '---',
             description: 'Angle of slot',
         }
+    },
+    'face planning': {
+        D: {
+            symbol: 'D',
+            unit: 'mm',
+            description: 'Face diameter',
+        },
+        AP: {
+            symbol: 'AP',
+            unit: 'mm',
+            description: 'Deep of cut',
+        },
+        HAND: {
+            symbol: 'HAND',
+            unit: '---',
+            description: 'Direction'
+        },
+    },
+    'external groove': {
+        L: {
+            symbol: 'L',
+            unit: 'mm',
+            description: 'Groove length',
+        },
+        AP: {
+            symbol: 'AP',
+            unit: 'mm',
+            description: 'Deep of cut',
+        },
+        HAND: {
+            symbol: 'HAND',
+            unit: '---',
+            description: 'Direction'
+        },
     },
 };
 
@@ -176,6 +222,12 @@ export const getImageForAction = (action) => {
         }
         case 'V slot': {
             return vSlotImage;
+        }
+        case 'face planning': {
+            return facePlanningImage;
+        }
+        case 'external groove': {
+            return externalGrooveImage;
         }
         default: break;
     }
