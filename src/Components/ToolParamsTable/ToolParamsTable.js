@@ -11,6 +11,10 @@ import './style.css';
 const styleObject = {
     tableContainer: {
         width: "100%",
+    },
+    tableCell: {
+        fontWeight: 1000,
+        fontSize: '15px'
     }
 }
 
@@ -23,16 +27,16 @@ export const ToolParamsTable = ({tool, params}) => {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell className='tableCell'>
+                    <TableCell sx={styleObject.tableCell}>
                         Parameter name
                     </TableCell>
-                    <TableCell className='tableCell'>
+                    <TableCell sx={styleObject.tableCell}>
                         Description
                     </TableCell>
-                    <TableCell className='tableCell'>
+                    <TableCell sx={styleObject.tableCell}>
                         Value
                     </TableCell>
-                    <TableCell className='tableCell'>
+                    <TableCell sx={styleObject.tableCell}>
                         Unity
                     </TableCell>
                 </TableRow>
@@ -42,10 +46,10 @@ export const ToolParamsTable = ({tool, params}) => {
                     Object.entries(tool)
                         .filter(([,value]) => value !== null)
                         .map((paramWithValue, index) => <TableRow key={index}>
-                        <TableCell className='tableCell'>{paramWithValue[0]}</TableCell>
-                        <TableCell className='tableCell'>{getDescriptionByParamName(paramWithValue[0])}</TableCell>
-                        <TableCell className='tableCell'>{paramWithValue[1]}</TableCell>
-                        <TableCell className='tableCell'>{getUnityByParamName(paramWithValue[0])}</TableCell>
+                        <TableCell sx={styleObject.tableCell}>{paramWithValue[0]}</TableCell>
+                        <TableCell sx={styleObject.tableCell}>{getDescriptionByParamName(paramWithValue[0])}</TableCell>
+                        <TableCell sx={styleObject.tableCell}>{paramWithValue[1]}</TableCell>
+                        <TableCell sx={styleObject.tableCell}>{getUnityByParamName(paramWithValue[0])}</TableCell>
                     </TableRow>)
                 }
             </TableBody>

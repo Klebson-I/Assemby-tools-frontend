@@ -7,6 +7,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import {handleFetch} from "../../Hooks/useFetch";
+import '../ToolParamsTable/style.css';
 
 const styleObject = {
     tableContainer: {
@@ -59,16 +60,16 @@ export const CompareTable = ({toolArray}) => {
                 <Table >
                     <TableHead>
                         <TableRow>
-                            <TableCell>
+                            <TableCell className='tableCell'>
                                 Parameter name
                             </TableCell>
-                            <TableCell>
+                            <TableCell className='tableCell'>
                                 Description
                             </TableCell>
-                            <TableCell>
+                            <TableCell className='tableCell'>
                                 Value
                             </TableCell>
-                            <TableCell>
+                            <TableCell className='tableCell'>
                                 Unity
                             </TableCell>
                         </TableRow>
@@ -80,10 +81,10 @@ export const CompareTable = ({toolArray}) => {
                                 .filter(([,value]) => value)
                                 .map(([name, value], index) =>
                                 <TableRow key={index} sx={isValueEqual(name, value, toolArray)}>
-                                <TableCell>{name}</TableCell>
-                                <TableCell sx={{maxWidth: '200px'}}>Description of the param</TableCell>
-                                <TableCell>{value}</TableCell>
-                                <TableCell>{getUnityByParamName(name)}</TableCell>
+                                <TableCell className='tableCell'>{name}</TableCell>
+                                <TableCell sx={{maxWidth: '200px'}} className='tableCell'>Description of the param</TableCell>
+                                <TableCell className='tableCell'>{value}</TableCell>
+                                <TableCell className='tableCell'>{getUnityByParamName(name)}</TableCell>
                             </TableRow>)
                         }
                     </TableBody>
