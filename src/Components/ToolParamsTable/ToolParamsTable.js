@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Paper} from "@mui/material";
+import './style.css';
 
 const styleObject = {
     tableContainer: {
@@ -22,16 +23,16 @@ export const ToolParamsTable = ({tool, params}) => {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Parameter name
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Description
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Value
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Unity
                     </TableCell>
                 </TableRow>
@@ -41,10 +42,10 @@ export const ToolParamsTable = ({tool, params}) => {
                     Object.entries(tool)
                         .filter(([,value]) => value !== null)
                         .map((paramWithValue, index) => <TableRow key={index}>
-                        <TableCell>{paramWithValue[0]}</TableCell>
-                        <TableCell sx={{maxWidth: '200px'}}>{getDescriptionByParamName(paramWithValue[0])}</TableCell>
-                        <TableCell>{paramWithValue[1]}</TableCell>
-                        <TableCell>{getUnityByParamName(paramWithValue[0])}</TableCell>
+                        <TableCell className='tableCell'>{paramWithValue[0]}</TableCell>
+                        <TableCell className='tableCell'>{getDescriptionByParamName(paramWithValue[0])}</TableCell>
+                        <TableCell className='tableCell'>{paramWithValue[1]}</TableCell>
+                        <TableCell className='tableCell'>{getUnityByParamName(paramWithValue[0])}</TableCell>
                     </TableRow>)
                 }
             </TableBody>

@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Paper} from "@mui/material";
 import {handleFetch} from "../Hooks/useFetch";
+import '../Components/ToolParamsTable/style.css';
 
 const styleObject = {
     tableContainer: {
@@ -38,13 +39,13 @@ export const ToolParamsTableForSetTool = ({tool}) => {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Parameter name
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Value
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='tableCell'>
                         Unity
                     </TableCell>
                 </TableRow>
@@ -55,9 +56,9 @@ export const ToolParamsTableForSetTool = ({tool}) => {
                         .filter((tool) => !restrictedParamsName.includes(tool[0]))
                         .filter(([,value]) => value)
                         .map(([name, value], index) => <TableRow key={index}>
-                        <TableCell>{name}</TableCell>
-                        <TableCell>{value}</TableCell>
-                        <TableCell>{getUnityByParamName(name)}</TableCell>
+                        <TableCell className='tableCell'>{name}</TableCell>
+                        <TableCell className='tableCell'>{value}</TableCell>
+                        <TableCell className='tableCell'>{getUnityByParamName(name)}</TableCell>
                     </TableRow>)
                 }
             </TableBody>
